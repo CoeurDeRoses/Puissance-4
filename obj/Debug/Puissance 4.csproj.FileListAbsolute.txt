@@ -1,0 +1,10 @@
+A:\C# Training\Puissance 4\bin\Debug\Puissance 4.exe.config
+A:\C# Training\Puissance 4\bin\Debug\Puissance 4.exe
+A:\C# Training\Puissance 4\bin\Debug\Puissance 4.pdb
+A:\C# Training\Puissance 4\obj\Debug\Puissance 4.csprojAssemblyReference.cache
+A:\C# Training\Puissance 4\obj\Debug\Puissance_4.Form1.resources
+A:\C# Training\Puissance 4\obj\Debug\Puissance_4.Properties.Resources.resources
+A:\C# Training\Puissance 4\obj\Debug\Puissance 4.csproj.GenerateResource.cache
+A:\C# Training\Puissance 4\obj\Debug\Puissance 4.csproj.CoreCompileInputs.cache
+A:\C# Training\Puissance 4\obj\Debug\Puissance 4.exe
+A:\C# Training\Puissance 4\obj\Debug\Puissance 4.pdb
