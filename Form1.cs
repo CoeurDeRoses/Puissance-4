@@ -62,30 +62,53 @@ namespace Puissance_4
         int point1 = 0; // pour le joueur 1
         int point2 = 0; // pour le joueur 2
         bool vainqueur = false;// Si on a un vainqueur elle deviendra TRUE
+
+        // Avant tout il faut gérer l'exception au cas où l'utilisateur n'as
+        // pas télécharger les fichiers marron et violet ou l'un d'entre eux
+        bool fichierManquant = true;
+
         private void button1_Click(object sender, EventArgs e)
         {
             PictureBox[] colonne =
               { pictureBox1, pictureBox2,pictureBox3,pictureBox4,pictureBox5, pictureBox6};
 
+            
+            do {
+
+                try
+                {
+                    if (tour % 2 == 0)// Si c'est pair  c'est un carré Maron pour le joueur 2
+                    {
+                        colonne[posColonne].Load(marron); posColonne -= 1;
+
+                        // le joueur 2 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 1
+                        label3.Text = "Tour du joueur 1";
 
 
-            if (tour % 2 == 0)// Si c'est pair  c'est un carré Maron pour le joueur 2
-            {
-                colonne[posColonne].Load(marron); posColonne -= 1;
+                    }
 
-                // le joueur 2 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 1
-                label3.Text = "Tour du joueur 1";
+                    if (tour % 2 != 0) // Sinon c'est un carré violet pour le joueur 1
+                    {
+                        colonne[posColonne].Load(violet); posColonne -= 1;
+                        // le joueur 1 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 2
+                        label3.Text = "Tour du joueur 2";
+                    }
+                    fichierManquant = false;
+                }
+
+                catch (Exception)
+                {
+                    MessageBox.Show
+                   ("Vérifiez bien que les deux fichiers marron.png et violet.png sont dans le même dossier que puissance 4. "+
+                   "Vous ne pouvez pas jouer sans eux. Fermez le jeu puis vérifiez.");
+                    //On casse la boucle car la valeur va rester à true et bloquez le programme
+                    break;
+
+                }
+                
+            } while (fichierManquant) ;
 
 
-            }
-
-            if (tour % 2 != 0) // Sinon c'est un carré violet pour le joueur 1
-            {
-                colonne[posColonne].Load(violet); posColonne -= 1;
-                // le joueur 1 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 2
-                label3.Text = "Tour du joueur 2";
-
-            }
             vainqueur = Verifier();//On vérifie a chaque appuie de boutton si un alignement est trouvé
 
             if (tour == 42 && !vainqueur)// Après avoir effectué les 42 tours le round est terminé
@@ -107,25 +130,42 @@ namespace Puissance_4
 
             PictureBox[] colonne2 =
               { pictureBox7, pictureBox8,pictureBox9,pictureBox10,pictureBox11, pictureBox12};
-
-
-            if (tour % 2 == 0)// Si c'est pair  c'est un carré Maron pour le joueur 2
+            do
             {
-                colonne2[posColonne2].Load(marron); posColonne2 -= 1;
 
-                // le joueur 2 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 1
-                label3.Text = "Tour du joueur 1";
+                try
+                {
+                    if (tour % 2 == 0)// Si c'est pair  c'est un carré Maron pour le joueur 2
+                    {
+                        colonne2[posColonne2].Load(marron); posColonne2 -= 1;
+
+                        // le joueur 2 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 1
+                        label3.Text = "Tour du joueur 1";
 
 
-            }
+                    }
 
-            if (tour % 2 != 0) // Sinon c'est un carré violet pour le joueur 1
-            {
-                colonne2[posColonne2].Load(violet); posColonne2 -= 1;
-                // le joueur 1 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 2
-                label3.Text = "Tour du joueur 2";
+                    if (tour % 2 != 0) // Sinon c'est un carré violet pour le joueur 1
+                    {
+                        colonne2[posColonne2].Load(violet); posColonne2 -= 1;
+                        // le joueur 1 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 2
+                        label3.Text = "Tour du joueur 2";
+                    }
+                    fichierManquant = false;
+                }
 
-            }
+                catch (Exception)
+                {
+                    MessageBox.Show
+                   ("Vérifiez bien que les deux fichiers marron.png et violet.png sont dans le même dossier que puissance 4. " +
+                   "Vous ne pouvez pas jouer sans eux. Fermez le jeu puis vérifiez.");
+                    break;
+
+                }
+                
+            } while (fichierManquant);
+
+           
             vainqueur = Verifier();//On vérifie a chaque appuie de boutton si un alignement est trouvé
 
             if (tour == 42 && !vainqueur)// Après avoir effectué les 42 tours le round est terminé
@@ -150,26 +190,41 @@ namespace Puissance_4
             PictureBox[] colonne3 =
               { pictureBox13, pictureBox14,pictureBox15,pictureBox16,pictureBox17, pictureBox18};
 
-
-
-
-            if (tour % 2 == 0)// Si c'est pair  c'est un carré Maron pour le joueur 2
+            do
             {
-                colonne3[posColonne3].Load(marron); posColonne3 -= 1;
 
-                // le joueur 2 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 1
-                label3.Text = "Tour du joueur 1";
+                try
+                {
+                    if (tour % 2 == 0)// Si c'est pair  c'est un carré Maron pour le joueur 2
+                    {
+                        colonne3[posColonne3].Load(marron); posColonne3 -= 1;
+
+                        // le joueur 2 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 1
+                        label3.Text = "Tour du joueur 1";
 
 
-            }
+                    }
 
-            if (tour % 2 != 0) // Sinon c'est un carré violet pour le joueur 1
-            {
-                colonne3[posColonne3].Load(violet); posColonne3 -= 1;
-                // le joueur 1 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 2
-                label3.Text = "Tour du joueur 2";
+                    if (tour % 2 != 0) // Sinon c'est un carré violet pour le joueur 1
+                    {
+                        colonne3[posColonne3].Load(violet); posColonne3 -= 1;
+                        // le joueur 1 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 2
+                        label3.Text = "Tour du joueur 2";
+                    }
+                    fichierManquant = false;
+                }
 
-            }
+                catch (Exception)
+                {
+                    MessageBox.Show
+                   ("Vérifiez bien que les deux fichiers marron.png et violet.png sont dans le même dossier que puissance 4. " +
+                   "Vous ne pouvez pas jouer sans eux. Fermez le jeu puis vérifiez.");
+                    //On casse la boucle car la valeur va rester à true et bloquez le programme
+                    break;
+
+                }
+
+            } while (fichierManquant);
             vainqueur = Verifier();//On vérifie a chaque appuie de boutton si un alignement est trouvé
 
             if (tour == 42 && !vainqueur)// Après avoir effectué les 42 tours le round est terminé
@@ -192,25 +247,41 @@ namespace Puissance_4
               { pictureBox19, pictureBox20,pictureBox21,pictureBox22,pictureBox23, pictureBox24};
 
 
-
-
-            if (tour % 2 == 0)// Si c'est pair  c'est un carré Maron pour le joueur 2
+            do
             {
-                colonne4[posColonne4].Load(marron); posColonne4 -= 1;
 
-                // le joueur 2 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 1
-                label3.Text = "Tour du joueur 1";
-                // Vérouillage du bouton
+                try
+                {
+                    if (tour % 2 == 0)// Si c'est pair  c'est un carré Maron pour le joueur 2
+                    {
+                        colonne4[posColonne4].Load(marron); posColonne4 -= 1;
 
-            }
+                        // le joueur 2 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 1
+                        label3.Text = "Tour du joueur 1";
 
-            if (tour % 2 != 0)  // Sinon c'est un carré violet pour le joueur 1
-            {
-                colonne4[posColonne4].Load(violet); posColonne4 -= 1;
-                // le joueur 1 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 2
-                label3.Text = "Tour du joueur 2";
 
-            }
+                    }
+
+                    if (tour % 2 != 0) // Sinon c'est un carré violet pour le joueur 1
+                    {
+                        colonne4[posColonne4].Load(violet); posColonne4 -= 1;
+                        // le joueur 1 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 2
+                        label3.Text = "Tour du joueur 2";
+                    }
+                    fichierManquant = false;
+                }
+
+                catch (Exception)
+                {
+                    MessageBox.Show
+                   ("Vérifiez bien que les deux fichiers marron.png et violet.png sont dans le même dossier que puissance 4. " +
+                   "Vous ne pouvez pas jouer sans eux. Fermez le jeu puis vérifiez.");
+                    //On casse la boucle car la valeur va rester à true et bloquez le programme
+                    break;
+
+                }
+
+            } while (fichierManquant);
             vainqueur = Verifier();//On vérifie a chaque appuie de boutton si un alignement est trouvé
 
             if (tour == 42 && !vainqueur)// Après avoir effectué les 42 tours le round est terminé
@@ -232,26 +303,41 @@ namespace Puissance_4
             PictureBox[] colonne5 =
               { pictureBox25, pictureBox26,pictureBox27,pictureBox28,pictureBox29, pictureBox30};
 
-
-
-
-            if (tour % 2 == 0)// Si c'est pair  c'est un carré Maron pour le joueur 2
+            do
             {
-                colonne5[posColonne5].Load(marron); posColonne5 -= 1;
 
-                // le joueur 2 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 1
-                label3.Text = "Tour du joueur 1";
-                // Vérouillage du bouton
+                try
+                {
+                    if (tour % 2 == 0)// Si c'est pair  c'est un carré Maron pour le joueur 2
+                    {
+                        colonne5[posColonne5].Load(marron); posColonne5 -= 1;
 
-            }
+                        // le joueur 2 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 1
+                        label3.Text = "Tour du joueur 1";
 
-            if (tour % 2 != 0)  // Sinon c'est un carré violet pour le joueur 1
-            {
-                colonne5[posColonne5].Load(violet); posColonne5 -= 1;
-                // le joueur 1 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 2
-                label3.Text = "Tour du joueur 2";
 
-            }
+                    }
+
+                    if (tour % 2 != 0) // Sinon c'est un carré violet pour le joueur 1
+                    {
+                        colonne5[posColonne5].Load(violet); posColonne5 -= 1;
+                        // le joueur 1 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 2
+                        label3.Text = "Tour du joueur 2";
+                    }
+                    fichierManquant = false;
+                }
+
+                catch (Exception)
+                {
+                    MessageBox.Show
+                   ("Vérifiez bien que les deux fichiers marron.png et violet.png sont dans le même dossier que puissance 4. " +
+                   "Vous ne pouvez pas jouer sans eux. Fermez le jeu puis vérifiez.");
+                    //On casse la boucle car la valeur va rester à true et bloquez le programme
+                    break;
+
+                }
+
+            } while (fichierManquant);
 
             vainqueur = Verifier();//On vérifie a chaque appuie de boutton si un alignement est trouvé
 
@@ -274,27 +360,41 @@ namespace Puissance_4
             PictureBox[] colonne6 =
               { pictureBox31, pictureBox32,pictureBox33,pictureBox34,pictureBox35, pictureBox36};
 
-
-
-
-            if (tour % 2 == 0)// Si c'est pair  c'est un carré Maron pour le joueur 2
+            do
             {
-                colonne6[posColonne6].Load(marron); posColonne6 -= 1;
 
-                // le joueur 2 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 1
-                label3.Text = "Tour du joueur 1";
-                // Vérouillage du bouton
+                try
+                {
+                    if (tour % 2 == 0)// Si c'est pair  c'est un carré Maron pour le joueur 2
+                    {
+                        colonne6[posColonne6].Load(marron); posColonne6 -= 1;
 
-            }
+                        // le joueur 2 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 1
+                        label3.Text = "Tour du joueur 1";
 
-            if (tour % 2 != 0)  // Sinon c'est un carré violet pour le joueur 1
-            {
-                colonne6[posColonne6].Load(violet); posColonne6 -= 1;
-                // le joueur 1 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 2
-                label3.Text = "Tour du joueur 2";
 
-            }
+                    }
 
+                    if (tour % 2 != 0) // Sinon c'est un carré violet pour le joueur 1
+                    {
+                        colonne6[posColonne6].Load(violet); posColonne6 -= 1;
+                        // le joueur 1 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 2
+                        label3.Text = "Tour du joueur 2";
+                    }
+                    fichierManquant = false;
+                }
+
+                catch (Exception)
+                {
+                    MessageBox.Show
+                   ("Vérifiez bien que les deux fichiers marron.png et violet.png sont dans le même dossier que puissance 4. " +
+                   "Vous ne pouvez pas jouer sans eux. Fermez le jeu puis vérifiez.");
+                    //On casse la boucle car la valeur va rester à true et bloquez le programme
+                    break;
+
+                }
+
+            } while (fichierManquant);
             vainqueur = Verifier();//On vérifie a chaque appuie de boutton si un alignement est trouvé
 
             if (tour == 42 && !vainqueur)// Après avoir effectué les 42 tours le round est terminé
@@ -317,24 +417,41 @@ namespace Puissance_4
               { pictureBox37, pictureBox38,pictureBox39,pictureBox40,pictureBox41, pictureBox42};
 
 
-
-            if (tour % 2 == 0)// Si c'est pair  c'est un carré Maron pour le joueur 2
+            do
             {
-                colonne7[posColonne7].Load(marron); posColonne7 -= 1;
 
-                // le joueur 2 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 1
-                label3.Text = "Tour du joueur 1";
-                // Vérouillage du bouton
+                try
+                {
+                    if (tour % 2 == 0)// Si c'est pair  c'est un carré Maron pour le joueur 2
+                    {
+                        colonne7[posColonne].Load(marron); posColonne7 -= 1;
 
-            }
+                        // le joueur 2 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 1
+                        label3.Text = "Tour du joueur 1";
 
-            if (tour % 2 != 0)  // Sinon c'est un carré violet pour le joueur 1
-            {
-                colonne7[posColonne7].Load(violet); posColonne7 -= 1;
-                // le joueur 1 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 2
-                label3.Text = "Tour du joueur 2";
 
-            }
+                    }
+
+                    if (tour % 2 != 0) // Sinon c'est un carré violet pour le joueur 1
+                    {
+                        colonne7[posColonne7].Load(violet); posColonne7 -= 1;
+                        // le joueur 1 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 2
+                        label3.Text = "Tour du joueur 2";
+                    }
+                    fichierManquant = false;
+                }
+
+                catch (Exception)
+                {
+                    MessageBox.Show
+                   ("Vérifiez bien que les deux fichiers marron.png et violet.png sont dans le même dossier que puissance 4. " +
+                   "Vous ne pouvez pas jouer sans eux. Fermez le jeu puis vérifiez.");
+                    //On casse la boucle car la valeur va rester à true et bloquez le programme
+                    break;
+
+                }
+
+            } while (fichierManquant);
 
             vainqueur = Verifier();//On vérifie a chaque appuie de boutton si un alignement est trouvé
 
