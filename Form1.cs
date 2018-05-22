@@ -630,7 +630,7 @@ namespace Puissance_4
             PictureBox[][] team6Copie =
                 {ColonneUne, ColonneDeux,ColonneTrois,
                 ColonneQuatre,ColonneCinq,ColonneSix,
-                ColonneSept,Diagonale3,Diagonale4 };
+                ColonneSept,Diagonale3,Diagonale4, Diagonale10, Diagonale9 };
             team6 = team6Copie;
 
             //Je parcours chaque tableau
