@@ -424,7 +424,7 @@ namespace Puissance_4
                 {
                     if (tour % 2 == 0)// Si c'est pair  c'est un carré Maron pour le joueur 2
                     {
-                        colonne7[posColonne].Load(marron); posColonne7 -= 1;
+                        colonne7[posColonne7].Load(marron); posColonne7 -= 1;
 
                         // le joueur 2 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 1
                         label3.Text = "Tour du joueur 1";
