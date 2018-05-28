@@ -32,6 +32,9 @@ namespace Puissance_4
          * 
          * on pourra choisir la colonne ou l'on veut poser son pion via le bouton
          * situé en dessous
+         * 
+         * Si avez vu au préalable le code sur le morpion vous remarquerez
+         * qu'il y'a quelque similarités
          */
 
         // On initialise à 1 pour le premier tour du joueur 1
@@ -52,8 +55,11 @@ namespace Puissance_4
         // Et comme vous le savez, dans puissance 4 on commence toujours en bas
         // Elles auront pour rôle de déterminer quel case sera affecter
 
-        int posColonne = 5, posColonne2 = 5, posColonne3 = 5, posColonne4 = 5,
+        static int posColonne = 5, posColonne2 = 5, posColonne3 = 5, posColonne4 = 5,
             posColonne5 = 5, posColonne6 = 5, posColonne7 = 5;
+
+        int[] tabPositionCol = { posColonne, posColonne2, posColonne3, posColonne4,
+            posColonne5, posColonne6, posColonne7};
 
         /* plus bas les boutons de réinitialisation de round ou total et la manière de calculer
          * 
@@ -61,7 +67,69 @@ namespace Puissance_4
          */
         int point1 = 0; // pour le joueur 1
         int point2 = 0; // pour le joueur 2
+        //La variable pointJoueur2 sera utilisé pour Vegeta si on l'affronte
+
+            // je garde certaines méthodes avec le même nom que dans le morpion
+        private void Activation()// Les bouttons sont activés une fois le mode choisie
+        {
+            button1.Enabled = true;
+            button2.Enabled = true;
+            button3.Enabled = true;
+            button4.Enabled = true;
+            button5.Enabled = true;
+            button6.Enabled = true;
+            button7.Enabled = true;
+        }
+
+        private void DesActivation()// Les bouttons sont activés une fois le mode choisie
+        {
+            button1.Enabled = false;
+            button2.Enabled = false;
+            button3.Enabled = false;
+            button4.Enabled = false;
+            button5.Enabled = false;
+            button6.Enabled = false;
+            button7.Enabled = false;
+        }
+
+        //Dabord on choisi soit le mode 2 joueurs
+        /*Il y'aura une variable booleen qui déterminera si le code duel entre humain sera éxecuter
+         ou si le code contre l'IA sera executer, l'IA se nommera Vegeta pour le fun*/
+        // la variable adversaire affiche le nom de l'opposant
+
+        bool mode = true;// True pour le duel d'humain
         bool vainqueur = false;// Si on a un vainqueur elle deviendra TRUE
+        string adversaire = "";// Necessaire pour affecter la chaine
+                               // tour du joueur 2 ou tour de Vegeta
+
+        private void DuelHumains_Click(object sender, EventArgs e)
+        {
+            label1.Text = "Joueur 1 nombre de point: ";
+            label2.Text = "Joueur 2 nombre de point: ";
+            adversaire = "Joueur 2";
+            // on fait apparaitre les boutons nouveau round et recommencer
+            button8.Visible = true; button9.Visible = true;
+            // puis on fait disparaitre les boutons de mode
+            duelHumains.Visible = false; buttonIA.Visible = false;
+            Activation();
+        }
+
+        private void ButtonIA_Click(object sender, EventArgs e)
+        {
+            label1.Text = "Joueur 1 nombre de point: ";
+            label2.Text = "Vegeta nombre de point: ";
+            adversaire = "Vegeta";
+            mode = false; // False pour affronter Vegeta
+            button8.Visible = true; button9.Visible = true;
+            duelHumains.Visible = false; buttonIA.Visible = false;
+            Activation();
+        }
+
+
+
+
+
+
 
         // Avant tout il faut gérer l'exception au cas où l'utilisateur n'as
         // pas télécharger les fichiers marron et violet ou l'un d'entre eux
@@ -77,9 +145,9 @@ namespace Puissance_4
 
                 try
                 {
-                    if (tour % 2 == 0)// Si c'est pair  c'est un carré Maron pour le joueur 2
+                    if (tour % 2 == 0 && mode)// Si c'est pair  c'est un carré Maron pour le joueur 2
                     {
-                        colonne[posColonne].Load(marron); posColonne -= 1;
+                        colonne[tabPositionCol[0]].Load(marron); tabPositionCol[0] -= 1;
 
                         // le joueur 2 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 1
                         label3.Text = "Tour du joueur 1";
@@ -87,21 +155,33 @@ namespace Puissance_4
 
                     }
 
-                    if (tour % 2 != 0) // Sinon c'est un carré violet pour le joueur 1
+                    if (tour % 2 != 0 || !mode) // Sinon c'est un carré violet pour le joueur 1
+                    // Il faut préviser le mode IA sinon on ne rentrera que quand c'est impair
+                     // Cette condition d'obligation impair pour rentrer dans ce code  est nécessaire uniquement si
+                     //On affronte le joueur 2
+                     //Par conséquent dans le mode Vegeta il faudra indiquer 21 et tour en cas de match nul
+                     // c'est à dire le nombre de fois ou on appuie sur le bouton
                     {
-                        colonne[posColonne].Load(violet); posColonne -= 1;
+                        colonne[tabPositionCol[0]].Load(violet); tabPositionCol[0] -= 1;
                         // le joueur 1 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 2
-                        label3.Text = "Tour du joueur 2";
+                        label3.Text = "Tour de "+ adversaire;
+
+                        if(!mode)
+                        {
+                            Vegeta();
+                        }
                     }
                     fichierManquant = false;
                 }
 
-                catch (Exception)
+                catch (Exception ex)
                 {
                     MessageBox.Show
                    ("Vérifiez bien que les deux fichiers marron.png et violet.png sont dans le même dossier que puissance 4. "+
-                   "Vous ne pouvez pas jouer sans eux. Fermez le jeu puis vérifiez.");
+                   "Vous ne pouvez pas jouer sans eux. Fermez le jeu puis vérifiez."+ex.Message
+                   +ex.StackTrace);
                     //On casse la boucle car la valeur va rester à true et bloquez le programme
+                    
                     break;
 
                 }
@@ -111,7 +191,7 @@ namespace Puissance_4
 
             vainqueur = Verifier();//On vérifie a chaque appuie de boutton si un alignement est trouvé
 
-            if (tour == 42 && !vainqueur)// Après avoir effectué les 42 tours le round est terminé
+            if ((tour == 42 && !vainqueur) || (tour == 21 && !mode && !vainqueur))// Après avoir effectué les 42 tours le round est terminé
             {
                 label3.Text = "Personne ne gagne ce round";
             }
@@ -119,7 +199,7 @@ namespace Puissance_4
             //Ensuite on incrémentre pour mettre à jour le nombre de tour
             tour += 1;
 
-            if (posColonne < 0)// On vérouille bouton à ce niveau de condition la colonne est pleine
+            if (tabPositionCol[0] < 0)// On vérouille bouton à ce niveau de condition la colonne est pleine
             {
                 button1.Enabled = false;
             }
@@ -135,9 +215,9 @@ namespace Puissance_4
 
                 try
                 {
-                    if (tour % 2 == 0)// Si c'est pair  c'est un carré Maron pour le joueur 2
+                    if (tour % 2 == 0 && mode)// Si c'est pair  c'est un carré Maron pour le joueur 2
                     {
-                        colonne2[posColonne2].Load(marron); posColonne2 -= 1;
+                        colonne2[tabPositionCol[1]].Load(marron); tabPositionCol[1] -= 1;
 
                         // le joueur 2 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 1
                         label3.Text = "Tour du joueur 1";
@@ -145,11 +225,15 @@ namespace Puissance_4
 
                     }
 
-                    if (tour % 2 != 0) // Sinon c'est un carré violet pour le joueur 1
+                    if (tour % 2 != 0 || !mode) // Sinon c'est un carré violet pour le joueur 1
                     {
-                        colonne2[posColonne2].Load(violet); posColonne2 -= 1;
+                        colonne2[tabPositionCol[1]].Load(violet); tabPositionCol[1] -= 1;
                         // le joueur 1 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 2
-                        label3.Text = "Tour du joueur 2";
+                        label3.Text = "Tour de " + adversaire;
+                        if (!mode)
+                        {
+                            Vegeta();
+                        }
                     }
                     fichierManquant = false;
                 }
@@ -168,7 +252,7 @@ namespace Puissance_4
            
             vainqueur = Verifier();//On vérifie a chaque appuie de boutton si un alignement est trouvé
 
-            if (tour == 42 && !vainqueur)// Après avoir effectué les 42 tours le round est terminé
+            if ((tour == 42 && !vainqueur) || (tour == 21 && !mode && !vainqueur))// Après avoir effectué les 42 tours le round est terminé
             {
                 label3.Text = "Personne ne gagne ce round";
             }
@@ -176,7 +260,7 @@ namespace Puissance_4
             //Ensuite on incrémentre pour mettre à jour le nombre de tour
             tour += 1;
 
-            if (posColonne2 < 0)
+            if (tabPositionCol[1] < 0)
             //Si la colonne est remplie on verouille le bouton
             {
                 button2.Enabled = false;
@@ -195,9 +279,9 @@ namespace Puissance_4
 
                 try
                 {
-                    if (tour % 2 == 0)// Si c'est pair  c'est un carré Maron pour le joueur 2
+                    if (tour % 2 == 0 && mode)// Si c'est pair  c'est un carré Maron pour le joueur 2
                     {
-                        colonne3[posColonne3].Load(marron); posColonne3 -= 1;
+                        colonne3[tabPositionCol[2]].Load(marron); tabPositionCol[2] -= 1;
 
                         // le joueur 2 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 1
                         label3.Text = "Tour du joueur 1";
@@ -205,11 +289,15 @@ namespace Puissance_4
 
                     }
 
-                    if (tour % 2 != 0) // Sinon c'est un carré violet pour le joueur 1
+                    if (tour % 2 != 0 || !mode) // Sinon c'est un carré violet pour le joueur 1
                     {
-                        colonne3[posColonne3].Load(violet); posColonne3 -= 1;
+                        colonne3[tabPositionCol[2]].Load(violet); tabPositionCol[2] -= 1;
                         // le joueur 1 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 2
-                        label3.Text = "Tour du joueur 2";
+                        label3.Text = "Tour de " + adversaire;
+                        if (!mode)
+                        {
+                            Vegeta();
+                        }
                     }
                     fichierManquant = false;
                 }
@@ -227,14 +315,14 @@ namespace Puissance_4
             } while (fichierManquant);
             vainqueur = Verifier();//On vérifie a chaque appuie de boutton si un alignement est trouvé
 
-            if (tour == 42 && !vainqueur)// Après avoir effectué les 42 tours le round est terminé
+            if ((tour == 42 && !vainqueur) || (tour == 21 && !mode && !vainqueur))// Après avoir effectué les 42 tours le round est terminé
             {
                 label3.Text = "Personne ne gagne ce round";
             }
 
             //Ensuite on incrémentre pour mettre à jour le nombre de tour
             tour += 1;
-            if (posColonne3 < 0)
+            if (tabPositionCol[2] < 0)
             //Si la colonne est remplie on verouille le bouton
             {
                 button3.Enabled = false;
@@ -252,9 +340,9 @@ namespace Puissance_4
 
                 try
                 {
-                    if (tour % 2 == 0)// Si c'est pair  c'est un carré Maron pour le joueur 2
+                    if (tour % 2 == 0 && mode)// Si c'est pair  c'est un carré Maron pour le joueur 2
                     {
-                        colonne4[posColonne4].Load(marron); posColonne4 -= 1;
+                        colonne4[tabPositionCol[3]].Load(marron); tabPositionCol[3] -= 1;
 
                         // le joueur 2 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 1
                         label3.Text = "Tour du joueur 1";
@@ -262,11 +350,15 @@ namespace Puissance_4
 
                     }
 
-                    if (tour % 2 != 0) // Sinon c'est un carré violet pour le joueur 1
+                    if (tour % 2 != 0 || !mode) // Sinon c'est un carré violet pour le joueur 1
                     {
-                        colonne4[posColonne4].Load(violet); posColonne4 -= 1;
+                        colonne4[tabPositionCol[3]].Load(violet); tabPositionCol[3] -= 1;
                         // le joueur 1 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 2
-                        label3.Text = "Tour du joueur 2";
+                        label3.Text = "Tour de " + adversaire;
+                        if (!mode)
+                        {
+                            Vegeta();
+                        }
                     }
                     fichierManquant = false;
                 }
@@ -284,14 +376,14 @@ namespace Puissance_4
             } while (fichierManquant);
             vainqueur = Verifier();//On vérifie a chaque appuie de boutton si un alignement est trouvé
 
-            if (tour == 42 && !vainqueur)// Après avoir effectué les 42 tours le round est terminé
+            if ((tour == 42 && !vainqueur) || (tour == 21 && !mode && !vainqueur))// Après avoir effectué les 42 tours le round est terminé
             {
                 label3.Text = "Personne ne gagne ce round";
             }
 
             //Ensuite on incrémentre pour mettre à jour le nombre de tour
             tour += 1;
-            if (posColonne4 < 0)
+            if (tabPositionCol[3] < 0)
             //Si la colonne est remplie on verouille le bouton
             {
                 button4.Enabled = false;
@@ -308,9 +400,9 @@ namespace Puissance_4
 
                 try
                 {
-                    if (tour % 2 == 0)// Si c'est pair  c'est un carré Maron pour le joueur 2
+                    if (tour % 2 == 0 && mode)// Si c'est pair  c'est un carré Maron pour le joueur 2
                     {
-                        colonne5[posColonne5].Load(marron); posColonne5 -= 1;
+                        colonne5[tabPositionCol[4]].Load(marron); tabPositionCol[4] -= 1;
 
                         // le joueur 2 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 1
                         label3.Text = "Tour du joueur 1";
@@ -318,11 +410,15 @@ namespace Puissance_4
 
                     }
 
-                    if (tour % 2 != 0) // Sinon c'est un carré violet pour le joueur 1
+                    if (tour % 2 != 0 || !mode) // Sinon c'est un carré violet pour le joueur 1
                     {
-                        colonne5[posColonne5].Load(violet); posColonne5 -= 1;
+                        colonne5[tabPositionCol[4]].Load(violet); tabPositionCol[4] -= 1;
                         // le joueur 1 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 2
-                        label3.Text = "Tour du joueur 2";
+                        label3.Text = "Tour de " + adversaire;
+                        if (!mode)
+                        {
+                            Vegeta();
+                        }
                     }
                     fichierManquant = false;
                 }
@@ -341,14 +437,14 @@ namespace Puissance_4
 
             vainqueur = Verifier();//On vérifie a chaque appuie de boutton si un alignement est trouvé
 
-            if (tour == 42 && !vainqueur)// Après avoir effectué les 42 tours le round est terminé
+            if ((tour == 42 && !vainqueur) || (tour == 21 && !mode && !vainqueur))// Après avoir effectué les 42 tours le round est terminé
             {
                 label3.Text = "Personne ne gagne ce round";
             }
 
             //Ensuite on incrémentre pour mettre à jour le nombre de tour
             tour += 1;
-            if (posColonne5 < 0)
+            if (tabPositionCol[4] < 0)
             //Si la colonne est remplie on verouille le bouton
             {
                 button5.Enabled = false;
@@ -365,9 +461,9 @@ namespace Puissance_4
 
                 try
                 {
-                    if (tour % 2 == 0)// Si c'est pair  c'est un carré Maron pour le joueur 2
+                    if (tour % 2 == 0 && mode)// Si c'est pair  c'est un carré Maron pour le joueur 2
                     {
-                        colonne6[posColonne6].Load(marron); posColonne6 -= 1;
+                        colonne6[tabPositionCol[5]].Load(marron); tabPositionCol[5] -= 1;
 
                         // le joueur 2 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 1
                         label3.Text = "Tour du joueur 1";
@@ -375,11 +471,15 @@ namespace Puissance_4
 
                     }
 
-                    if (tour % 2 != 0) // Sinon c'est un carré violet pour le joueur 1
+                    if (tour % 2 != 0 || !mode) // Sinon c'est un carré violet pour le joueur 1
                     {
-                        colonne6[posColonne6].Load(violet); posColonne6 -= 1;
+                        colonne6[tabPositionCol[5]].Load(violet); tabPositionCol[5] -= 1;
                         // le joueur 1 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 2
-                        label3.Text = "Tour du joueur 2";
+                        label3.Text = "Tour de " + adversaire;
+                        if (!mode)
+                        {
+                            Vegeta();
+                        }
                     }
                     fichierManquant = false;
                 }
@@ -397,14 +497,14 @@ namespace Puissance_4
             } while (fichierManquant);
             vainqueur = Verifier();//On vérifie a chaque appuie de boutton si un alignement est trouvé
 
-            if (tour == 42 && !vainqueur)// Après avoir effectué les 42 tours le round est terminé
+            if ((tour == 42 && !vainqueur) || (tour == 21 && !mode && !vainqueur))// Après avoir effectué les 42 tours le round est terminé
             {
                 label3.Text = "Personne ne gagne ce round";
             }
 
             //Ensuite on incrémentre pour mettre à jour le nombre de tour
             tour += 1;
-            if (posColonne6 < 0)
+            if (tabPositionCol[5] < 0)
             //Si la colonne est remplie on verouille le bouton
             {
                 button6.Enabled = false;
@@ -422,9 +522,9 @@ namespace Puissance_4
 
                 try
                 {
-                    if (tour % 2 == 0)// Si c'est pair  c'est un carré Maron pour le joueur 2
+                    if (tour % 2 == 0 && mode)// Si c'est pair  c'est un carré Maron pour le joueur 2
                     {
-                        colonne7[posColonne7].Load(marron); posColonne7 -= 1;
+                        colonne7[tabPositionCol[6]].Load(marron); tabPositionCol[6] -= 1;
 
                         // le joueur 2 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 1
                         label3.Text = "Tour du joueur 1";
@@ -432,11 +532,15 @@ namespace Puissance_4
 
                     }
 
-                    if (tour % 2 != 0) // Sinon c'est un carré violet pour le joueur 1
+                    if (tour % 2 != 0 || !mode) // Sinon c'est un carré violet pour le joueur 1
                     {
-                        colonne7[posColonne7].Load(violet); posColonne7 -= 1;
+                        colonne7[tabPositionCol[6]].Load(violet); tabPositionCol[6] -= 1;
                         // le joueur 1 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 2
-                        label3.Text = "Tour du joueur 2";
+                        label3.Text = "Tour de " + adversaire;
+                        if (!mode)
+                        {
+                            Vegeta();
+                        }
                     }
                     fichierManquant = false;
                 }
@@ -455,14 +559,14 @@ namespace Puissance_4
 
             vainqueur = Verifier();//On vérifie a chaque appuie de boutton si un alignement est trouvé
 
-            if (tour == 42 && !vainqueur)// Après avoir effectué les 42 tours le round est terminé
+            if ((tour == 42 && !vainqueur) || (tour == 21 && !mode && !vainqueur))// Après avoir effectué les 42 tours le round est terminé
             {
                 label3.Text = "Personne ne gagne ce round";
             }
 
             //Ensuite on incrémentre pour mettre à jour le nombre de tour
             tour += 1;
-            if (posColonne7 < 0)
+            if (tabPositionCol[6] < 0)
             //Si la colonne est remplie on verouille le bouton
             {
                 button7.Enabled = false;
@@ -475,11 +579,46 @@ namespace Puissance_4
          * dans puissance 4
          */
 
+        
+
         static PictureBox[][] teamLigne;
         static PictureBox[][] team6;
         static PictureBox[][] team5;
         static PictureBox[][] team4;
+        /*
+        private void IntialiserPictureBox()
+        {
+            foreach (PictureBox[] tableau in teamLigne)
+            {
+                foreach (PictureBox element in tableau)
+                {
+                    element.ImageLocation = "";
+                }
+            }
 
+            foreach (PictureBox[] tableau in team6)
+            {
+                foreach (PictureBox element in tableau)
+                {
+                    element.ImageLocation = "";
+                }
+            }
+            foreach (PictureBox[] tableau in team5)
+            {
+                foreach (PictureBox element in tableau)
+                {
+                    element.ImageLocation = "";
+                }
+            }
+
+            foreach (PictureBox[] tableau in team4)
+            {
+                foreach (PictureBox element in tableau)
+                {
+                    element.ImageLocation = "";
+                }
+            }
+        }*/
 
 
 
@@ -537,7 +676,7 @@ namespace Puissance_4
                        Ligne[i + 2].ImageLocation == marron &&
                        Ligne[i + 3].ImageLocation == marron)
                     {
-                        point2 += 1; label3.Text = "Le joueur 2 remporte ce round";
+                        point2 += 1; label3.Text = adversaire+ " remporte ce round";
                         lbJoueur2.Text = point2.ToString();
                         gagne = true;
                         BoutonVerrouiller();
@@ -649,7 +788,7 @@ namespace Puissance_4
                        groupe[i + 3].ImageLocation == marron)
                     {
 
-                        point2 += 1; label3.Text = "Le joueur 2 remporte ce round";
+                        point2 += 1; label3.Text = adversaire + " remporte ce round";
                         lbJoueur2.Text = point2.ToString();
                         gagne = true;
                         BoutonVerrouiller();
@@ -687,7 +826,7 @@ namespace Puissance_4
                        groupe[i + 2].ImageLocation == marron &&
                        groupe[i + 3].ImageLocation == marron)
                     {
-                        point2 += 1; label3.Text = "Le joueur 2 remporte ce round";
+                        point2 += 1; label3.Text = adversaire + " remporte ce round";
                         lbJoueur2.Text = point2.ToString();
                         gagne = true;
                         BoutonVerrouiller();
@@ -719,7 +858,7 @@ namespace Puissance_4
                    groupe[2].ImageLocation == marron &&
                    groupe[3].ImageLocation == marron)
                 {
-                    point2 += 1; label3.Text = "Le joueur 2 remporte ce round";
+                    point2 += 1; label3.Text = adversaire + " remporte ce round";
                     lbJoueur2.Text = point2.ToString();
                     gagne = true;
                     BoutonVerrouiller();
@@ -782,8 +921,10 @@ namespace Puissance_4
 
 
 
-            posColonne = 5; posColonne2 = 5; posColonne3 = 5; posColonne4 = 5;
-            posColonne5 = 5; posColonne6 = 5; posColonne7 = 5;
+            for(int i=0; i<7; i++)
+            {
+                tabPositionCol[i] = 5;
+            }
 
             // Si la déclaration des groupes de tableaux aurait été faites dans la fonction verification
             // j'aurais été obligé d'écrire 42 instructions pour les 42 cellule.
@@ -809,15 +950,16 @@ namespace Puissance_4
         // TOUT RECOMMENCER
         private void button9_Click(object sender, EventArgs e)
         {
+            
+
              point1 = 0; point2 = 0; lbJoueur1.Text = ""; lbJoueur2.Text = "";
             label3.Text = "";
-            button1.Enabled = true; button2.Enabled = true;
-            button3.Enabled = true; button4.Enabled = true;
-            button5.Enabled = true; button6.Enabled = true;
-            button7.Enabled = true;
+            DesActivation();
 
-            posColonne = 5; posColonne2 = 5; posColonne3 = 5; posColonne4 = 5;
-            posColonne5 = 5; posColonne6 = 5; posColonne7 = 5;
+            for(int i=0; i<7; i++)
+            {
+                tabPositionCol[i] = 5;
+            }
             // Si on appuie sur nouveau round sans avoir jouer un seul pion
             // Une exception est levé, il faut donc faire executer ce code
             // seulement si le nombre de tour est superieur a 1
@@ -828,6 +970,12 @@ namespace Puissance_4
                 tour = 1;
             }
 
+            duelHumains.Visible = true;
+            buttonIA.Visible = true;
+
+            button9.Visible = false;
+            button8.Visible = false;
+            mode = true;
 
         }
 
@@ -841,6 +989,88 @@ namespace Puissance_4
             button5.Enabled = false;
             button6.Enabled = false;
             button7.Enabled = false;
+        }
+        PictureBox[][] teamColonne;
+        PictureBox[][] teamLigneVegeta;
+        private void Vegeta()
+        {
+            /*
+             * Je vais coder la stratégie de la même manière que le morpion
+             * il va d'abord se focaliser sur le blocage d'alignement potentiel du joueur 1
+             * et saisir l'opportunité de gagner dès qu'il a 3 couleur identiques
+             * 
+             * Cas A Takedown
+             * Dès que Vegeta voit 3 couleur lui appartenant il place une 4 ème couleur so possible
+             * 
+             * Cas B Bloqueur Dès que Vegeta voit 3 couleur du joueur 1 il bloque si possible
+             * 
+             * Cas C bloqueur il voit 2 couleur du joueur 1 il bloque
+             * 
+             * Cas D il voit une couleur, il bloque un endroit 
+             * 
+             * 
+             * La manière de coder va quand même différer
+             * 
+             * contrairement au morpion ou l'on peut commencer depuis n'importe où
+             * ici on part du bas, toujours
+             * 
+             * Il faudra faire comprendre a Vegeta a quel moment il peut jouer à la ligne numéro 1,2,3 etc..
+             * 
+             * 
+             * Par nécessité de clarté pour mieux identifier quand Vegeta peut jouer a quel ligne
+             * on va créer un tableau enregistrant 7  tableaux de colonnes
+             */
+
+            // attention il faut obligatoirement mettre les picturebox dans l'ordre du
+            // plus bas géographiquement au plus haut, règle à respecter.
+
+            PictureBox[] colonne1 =
+                { pictureBox6, pictureBox5, pictureBox4, pictureBox3, pictureBox2, pictureBox1 };
+            PictureBox[] colonne2 =
+                { pictureBox12, pictureBox11, pictureBox10, pictureBox9, pictureBox8, pictureBox7 };
+            PictureBox[] colonne3 =
+                { pictureBox18, pictureBox17, pictureBox16, pictureBox15, pictureBox14, pictureBox13 };
+            PictureBox[] colonne4 =
+                { pictureBox24, pictureBox23, pictureBox22, pictureBox21, pictureBox20, pictureBox19 };
+            PictureBox[] colonne5 =
+                { pictureBox30, pictureBox29, pictureBox28, pictureBox27, pictureBox26, pictureBox25 };
+            PictureBox[] colonne6 =
+                { pictureBox36, pictureBox35, pictureBox34, pictureBox33, pictureBox32, pictureBox31 };
+            PictureBox[] colonne7 =
+                { pictureBox42, pictureBox41, pictureBox40, pictureBox39, pictureBox38, pictureBox37 };
+
+            PictureBox[][] teamColonneCopie = { colonne1, colonne2, colonne3, colonne4, colonne5, colonne6, colonne7 };
+            teamColonne = teamColonneCopie;
+
+            //Nous aurons besoin du tableau de ligne mais il faudra inverser le sens
+            /*
+             * C'est à dire qu'on va prendre les lignes du tableaux existants et affecter dans une variable
+             * de la dernière à la première, car sinon la première ligne tout en haut sera analysé
+             * nous avons besoin de commencer par la bas, donc la dernière en premier
+             */
+
+
+
+
+            PictureBox[] Ligne1V =
+             {pictureBox1,pictureBox7,pictureBox13,pictureBox19,pictureBox25,pictureBox31,pictureBox37};
+            PictureBox[] Ligne2V =
+             {pictureBox2,pictureBox8,pictureBox14,pictureBox20,pictureBox26,pictureBox32,pictureBox38};
+            PictureBox[] Ligne3V =
+             {pictureBox3,pictureBox9,pictureBox15,pictureBox21,pictureBox27,pictureBox33,pictureBox39};
+            PictureBox[] Ligne4V =
+             {pictureBox4,pictureBox10,pictureBox16,pictureBox22,pictureBox28,pictureBox34,pictureBox40};
+            PictureBox[] Ligne5V =
+             {pictureBox5,pictureBox11,pictureBox17,pictureBox23,pictureBox29,pictureBox35,pictureBox41};
+            PictureBox[] Ligne6V =
+             {pictureBox6,pictureBox12,pictureBox18,pictureBox24,pictureBox30,pictureBox36,pictureBox42};
+
+            PictureBox[][] teamLigneVegetaCopie =
+                { Ligne6V, Ligne5V, Ligne4V, Ligne3V, Ligne2V, Ligne1V };
+
+            teamLigneVegeta = teamLigneVegetaCopie;
+
+            
         }
     }
 }
