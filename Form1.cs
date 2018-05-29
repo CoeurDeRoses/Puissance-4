@@ -907,7 +907,7 @@ namespace Puissance_4
                 }
             }
         }
-
+        
        
         private void button8_Click(object sender, EventArgs e)
         {
@@ -991,7 +991,6 @@ namespace Puissance_4
             button7.Enabled = false;
         }
         PictureBox[][] teamColonne;
-        PictureBox[][] teamLigneVegeta;
         private void Vegeta()
         {
             /*
@@ -999,14 +998,14 @@ namespace Puissance_4
              * il va d'abord se focaliser sur le blocage d'alignement potentiel du joueur 1
              * et saisir l'opportunité de gagner dès qu'il a 3 couleur identiques
              * 
-             * Cas A Takedown
+             * Cas Takedown
              * Dès que Vegeta voit 3 couleur lui appartenant il place une 4 ème couleur so possible
              * 
-             * Cas B Bloqueur Dès que Vegeta voit 3 couleur du joueur 1 il bloque si possible
+             * Cas A Bloqueur Dès que Vegeta voit 3 couleur du joueur 1 il bloque si possible
              * 
-             * Cas C bloqueur il voit 2 couleur du joueur 1 il bloque
+             * Cas D bloqueur il voit 2 couleur du joueur 1 il bloque
              * 
-             * Cas D il voit une couleur, il bloque un endroit 
+             * Cas C il voit une couleur, il bloque un endroit 
              * 
              * 
              * La manière de coder va quand même différer
@@ -1042,33 +1041,65 @@ namespace Puissance_4
             PictureBox[][] teamColonneCopie = { colonne1, colonne2, colonne3, colonne4, colonne5, colonne6, colonne7 };
             teamColonne = teamColonneCopie;
 
-            //Nous aurons besoin du tableau de ligne mais il faudra inverser le sens
-            /*
-             * C'est à dire qu'on va prendre les lignes du tableaux existants et affecter dans une variable
-             * de la dernière à la première, car sinon la première ligne tout en haut sera analysé
-             * nous avons besoin de commencer par la bas, donc la dernière en premier
-             */
+
+            /*** BLOCAGE D'ALIGNEMENT A 4 CASE VIOLETTE ***/
+
+
+          /* 6 tours nécessaires dans la boucle, car 6 lignes en testant les 7 colonnes en même temps */
+
+               /*a chaque tour les mêmes index de chaque colonne sont testé toutes les case à la même ligne */
+            for(int i=0; i<6; i++)
+            {
+
+                /* Ensuite 4 tour seront nécessaires 4 on a 4 combinaisons possibles maximum sur une ligne*/
+                for(int j=0; j<4; j++)
+                {
+                    /*Comme nous testerons 4 colonnes par tour, on utilisera j+1 j+2 et j+3 pour les 3 colonnes après j*/
+                    
+                if(teamColonne[j][i].ImageLocation == violet &&
+                   teamColonne[j+1][i].ImageLocation == violet &&
+                   teamColonne[j+2][i].ImageLocation == violet &&
+                   teamColonne[j+3][i].ImageLocation == null)
+                    {
+                        tabPositionCol[j + 3] -= 1;
+                        teamColonne[j + 3][i].Load(marron); goto PasserLeTour;
+                    }
+
+                    if (teamColonne[j][i].ImageLocation == violet &&
+                   teamColonne[j + 1][i].ImageLocation == violet &&
+                   teamColonne[j + 2][i].ImageLocation == null &&
+                   teamColonne[j + 3][i].ImageLocation == violet)
+                    {
+                        tabPositionCol[j + 2] -= 1;
+                        teamColonne[j + 2][i].Load(marron); goto PasserLeTour;
+                    }
+
+                    if (teamColonne[j][i].ImageLocation == violet &&
+                   teamColonne[j + 1][i].ImageLocation == null &&
+                   teamColonne[j + 2][i].ImageLocation == violet &&
+                   teamColonne[j + 3][i].ImageLocation == violet)
+                    {
+                        tabPositionCol[j + 1] -= 1;
+                        teamColonne[j + 1][i].Load(marron); goto PasserLeTour;
+                    }
+
+                    if (teamColonne[j][i].ImageLocation == null &&
+                   teamColonne[j + 1][i].ImageLocation == violet &&
+                   teamColonne[j + 2][i].ImageLocation == violet &&
+                   teamColonne[j + 3][i].ImageLocation == violet)
+                    {
+                        tabPositionCol[j] -= 1;
+                        teamColonne[j][i].Load(marron); goto PasserLeTour;
+                    }
 
 
 
+                }
+            }
 
-            PictureBox[] Ligne1V =
-             {pictureBox1,pictureBox7,pictureBox13,pictureBox19,pictureBox25,pictureBox31,pictureBox37};
-            PictureBox[] Ligne2V =
-             {pictureBox2,pictureBox8,pictureBox14,pictureBox20,pictureBox26,pictureBox32,pictureBox38};
-            PictureBox[] Ligne3V =
-             {pictureBox3,pictureBox9,pictureBox15,pictureBox21,pictureBox27,pictureBox33,pictureBox39};
-            PictureBox[] Ligne4V =
-             {pictureBox4,pictureBox10,pictureBox16,pictureBox22,pictureBox28,pictureBox34,pictureBox40};
-            PictureBox[] Ligne5V =
-             {pictureBox5,pictureBox11,pictureBox17,pictureBox23,pictureBox29,pictureBox35,pictureBox41};
-            PictureBox[] Ligne6V =
-             {pictureBox6,pictureBox12,pictureBox18,pictureBox24,pictureBox30,pictureBox36,pictureBox42};
 
-            PictureBox[][] teamLigneVegetaCopie =
-                { Ligne6V, Ligne5V, Ligne4V, Ligne3V, Ligne2V, Ligne1V };
-
-            teamLigneVegeta = teamLigneVegetaCopie;
+            PasserLeTour:;
+        
 
             
         }
