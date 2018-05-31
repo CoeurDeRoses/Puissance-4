@@ -1677,9 +1677,9 @@ namespace Puissance_4
             for (int i = 0; i < 7; i++)
             {
                 //Ensuite à la boucle suivante on teste toutes les combinaisons possibles sur une et mêem colonne
-                // de gagner il y'aura  5 tour
+                // de gagner il y'aura  4 tour
 
-                for (int j = 0; j < 5; j++)
+                for (int j = 0; j < 4; j++)
                 {
                     if (teamColonne[i][j].ImageLocation == violet &&
                         teamColonne[i][j + 1].ImageLocation == violet &&
