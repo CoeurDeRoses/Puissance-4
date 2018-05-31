@@ -67,9 +67,9 @@ namespace Puissance_4
          */
         int point1 = 0; // pour le joueur 1
         int point2 = 0; // pour le joueur 2
-        //La variable pointJoueur2 sera utilisé pour Vegeta si on l'affronte
+                        //La variable pointJoueur2 sera utilisé pour Vegeta si on l'affronte
 
-            // je garde certaines méthodes avec le même nom que dans le morpion
+        // je garde certaines méthodes avec le même nom que dans le morpion
         private void Activation()// Les bouttons sont activés une fois le mode choisie
         {
             button1.Enabled = true;
@@ -140,8 +140,9 @@ namespace Puissance_4
             PictureBox[] colonne =
               { pictureBox1, pictureBox2,pictureBox3,pictureBox4,pictureBox5, pictureBox6};
 
-            
-            do {
+
+            do
+            {
 
                 try
                 {
@@ -156,17 +157,17 @@ namespace Puissance_4
                     }
 
                     if (tour % 2 != 0 || !mode) // Sinon c'est un carré violet pour le joueur 1
-                    // Il faut préviser le mode IA sinon on ne rentrera que quand c'est impair
-                     // Cette condition d'obligation impair pour rentrer dans ce code  est nécessaire uniquement si
-                     //On affronte le joueur 2
-                     //Par conséquent dans le mode Vegeta il faudra indiquer 21 et tour en cas de match nul
-                     // c'est à dire le nombre de fois ou on appuie sur le bouton
+                                                // Il faut préviser le mode IA sinon on ne rentrera que quand c'est impair
+                                                // Cette condition d'obligation impair pour rentrer dans ce code  est nécessaire uniquement si
+                                                //On affronte le joueur 2
+                                                //Par conséquent dans le mode Vegeta il faudra indiquer 21 et tour en cas de match nul
+                                                // c'est à dire le nombre de fois ou on appuie sur le bouton
                     {
                         colonne[tabPositionCol[0]].Load(violet); tabPositionCol[0] -= 1;
                         // le joueur 1 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 2
-                        label3.Text = "Tour de "+ adversaire;
+                        label3.Text = "Tour de " + adversaire;
 
-                        if(!mode)
+                        if (!mode)
                         {
                             Vegeta();
                         }
@@ -177,16 +178,16 @@ namespace Puissance_4
                 catch (Exception ex)
                 {
                     MessageBox.Show
-                   ("Vérifiez bien que les deux fichiers marron.png et violet.png sont dans le même dossier que puissance 4. "+
-                   "Vous ne pouvez pas jouer sans eux. Fermez le jeu puis vérifiez."+ex.Message
-                   +ex.StackTrace);
+                   ("Vérifiez bien que les deux fichiers marron.png et violet.png sont dans le même dossier que puissance 4. " +
+                   "Vous ne pouvez pas jouer sans eux. Fermez le jeu puis vérifiez." + ex.Message
+                   + ex.StackTrace);
                     //On casse la boucle car la valeur va rester à true et bloquez le programme
-                    
+
                     break;
 
                 }
-                
-            } while (fichierManquant) ;
+
+            } while (fichierManquant);
 
 
             vainqueur = Verifier();//On vérifie a chaque appuie de boutton si un alignement est trouvé
@@ -246,10 +247,10 @@ namespace Puissance_4
                     break;
 
                 }
-                
+
             } while (fichierManquant);
 
-           
+
             vainqueur = Verifier();//On vérifie a chaque appuie de boutton si un alignement est trouvé
 
             if ((tour == 42 && !vainqueur) || (tour == 21 && !mode && !vainqueur))// Après avoir effectué les 42 tours le round est terminé
@@ -579,46 +580,13 @@ namespace Puissance_4
          * dans puissance 4
          */
 
-        
+
 
         static PictureBox[][] teamLigne;
         static PictureBox[][] team6;
         static PictureBox[][] team5;
         static PictureBox[][] team4;
-        /*
-        private void IntialiserPictureBox()
-        {
-            foreach (PictureBox[] tableau in teamLigne)
-            {
-                foreach (PictureBox element in tableau)
-                {
-                    element.ImageLocation = "";
-                }
-            }
 
-            foreach (PictureBox[] tableau in team6)
-            {
-                foreach (PictureBox element in tableau)
-                {
-                    element.ImageLocation = "";
-                }
-            }
-            foreach (PictureBox[] tableau in team5)
-            {
-                foreach (PictureBox element in tableau)
-                {
-                    element.ImageLocation = "";
-                }
-            }
-
-            foreach (PictureBox[] tableau in team4)
-            {
-                foreach (PictureBox element in tableau)
-                {
-                    element.ImageLocation = "";
-                }
-            }
-        }*/
 
 
 
@@ -676,7 +644,7 @@ namespace Puissance_4
                        Ligne[i + 2].ImageLocation == marron &&
                        Ligne[i + 3].ImageLocation == marron)
                     {
-                        point2 += 1; label3.Text = adversaire+ " remporte ce round";
+                        point2 += 1; label3.Text = adversaire + " remporte ce round";
                         lbJoueur2.Text = point2.ToString();
                         gagne = true;
                         BoutonVerrouiller();
@@ -907,12 +875,12 @@ namespace Puissance_4
                 }
             }
         }
-        
-       
+
+
         private void button8_Click(object sender, EventArgs e)
         {
             // On réinitialise les variables nécessaires
-            
+
             label3.Text = "";
             button1.Enabled = true; button2.Enabled = true;
             button3.Enabled = true; button4.Enabled = true;
@@ -921,7 +889,7 @@ namespace Puissance_4
 
 
 
-            for(int i=0; i<7; i++)
+            for (int i = 0; i < 7; i++)
             {
                 tabPositionCol[i] = 5;
             }
@@ -942,7 +910,7 @@ namespace Puissance_4
                 // Attention à réinitialiser la variable tour
                 tour = 1;
             }
-            
+
 
 
 
@@ -950,13 +918,13 @@ namespace Puissance_4
         // TOUT RECOMMENCER
         private void button9_Click(object sender, EventArgs e)
         {
-            
 
-             point1 = 0; point2 = 0; lbJoueur1.Text = ""; lbJoueur2.Text = "";
+
+            point1 = 0; point2 = 0; lbJoueur1.Text = ""; lbJoueur2.Text = "";
             label3.Text = "";
             DesActivation();
 
-            for(int i=0; i<7; i++)
+            for (int i = 0; i < 7; i++)
             {
                 tabPositionCol[i] = 5;
             }
@@ -1042,24 +1010,107 @@ namespace Puissance_4
             teamColonne = teamColonneCopie;
 
 
-            /*** BLOCAGE D'ALIGNEMENT A 4 CASE VIOLETTE ***/
 
 
-          /* 6 tours nécessaires dans la boucle, car 6 lignes en testant les 7 colonnes en même temps */
+            /*** TAKEDOWN D'ALIGNEMENT A 4 CASE EN COLONNE MARRON ***/
+            // dans les takedown on test toujours en priorité les alignement les plus grand nous irons donc de 4 a 2
+            /* 7 tour nécessaire car 7 colonnes */
+            /* a chaque tour on teste une colonne différente */
+            for (int i = 0; i < 7; i++)
+            {
+                //Ensuite à la boucle suivante on teste toutes les combinaisons possibles sur une et mêem colonne
+                // de gagner il y'en aura 4 maximum de
 
-               /*a chaque tour les mêmes index de chaque colonne sont testé toutes les case à la même ligne */
-            for(int i=0; i<6; i++)
+                for (int j = 0; j < 4; j++)
+                {
+                    if (teamColonne[i][j].ImageLocation == marron &&
+                        teamColonne[i][j + 1].ImageLocation == marron &&
+                        teamColonne[i][j + 2].ImageLocation == marron &&
+                        teamColonne[i][j + 3].ImageLocation == null)
+                    // sur une colonne la seule manière de gagner est toujorus vers le haut
+                    // Donc l'index le plus gros j+3 sera le seul a devoir être nul
+                    {
+                        tabPositionCol[i] -= 1;
+                        teamColonne[i][j + 3].Load(marron); goto PasserLeTour;
+                    }
+                }
+
+            }
+
+            /**** TAKEDOWN EN LIGNE MARRON ***/
+            for (int i = 0; i < 6; i++)
             {
 
                 /* Ensuite 4 tour seront nécessaires 4 on a 4 combinaisons possibles maximum sur une ligne*/
-                for(int j=0; j<4; j++)
+                for (int j = 0; j < 4; j++)
                 {
                     /*Comme nous testerons 4 colonnes par tour, on utilisera j+1 j+2 et j+3 pour les 3 colonnes après j*/
-                    
-                if(teamColonne[j][i].ImageLocation == violet &&
-                   teamColonne[j+1][i].ImageLocation == violet &&
-                   teamColonne[j+2][i].ImageLocation == violet &&
-                   teamColonne[j+3][i].ImageLocation == null)
+
+                    if (teamColonne[j][i].ImageLocation == marron &&
+                       teamColonne[j + 1][i].ImageLocation == marron &&
+                       teamColonne[j + 2][i].ImageLocation == marron &&
+                       teamColonne[j + 3][i].ImageLocation == null)
+                    {
+                        tabPositionCol[j + 3] -= 1;
+                        teamColonne[j + 3][i].Load(marron); goto PasserLeTour;
+                    }
+
+                    if (teamColonne[j][i].ImageLocation == marron &&
+                   teamColonne[j + 1][i].ImageLocation == marron &&
+                   teamColonne[j + 2][i].ImageLocation == null &&
+                   teamColonne[j + 3][i].ImageLocation == marron)
+                    {
+                        tabPositionCol[j + 2] -= 1;
+                        teamColonne[j + 2][i].Load(marron); goto PasserLeTour;
+                    }
+
+                    if (teamColonne[j][i].ImageLocation == marron &&
+                   teamColonne[j + 1][i].ImageLocation == null &&
+                   teamColonne[j + 2][i].ImageLocation == marron &&
+                   teamColonne[j + 3][i].ImageLocation == marron)
+                    {
+                        tabPositionCol[j + 1] -= 1;
+                        teamColonne[j + 1][i].Load(marron); goto PasserLeTour;
+                    }
+
+                    if (teamColonne[j][i].ImageLocation == null &&
+                   teamColonne[j + 1][i].ImageLocation == marron &&
+                   teamColonne[j + 2][i].ImageLocation == marron &&
+                   teamColonne[j + 3][i].ImageLocation == marron)
+                    {
+                        tabPositionCol[j] -= 1;
+                        teamColonne[j][i].Load(marron); goto PasserLeTour;
+                    }
+
+
+
+                }
+            }
+
+
+
+
+
+            /*** BLOCAGE D'ALIGNEMENT A 4 CASE VIOLETTE EN LIGNE  ***/
+            // dans les blocages on test toujours en priorité les alignement les plus grand
+            // Nous irons de 4 a 3 puis a 2
+
+            /* 6 tours nécessaires dans la boucle, car 6 lignes en testant les 7 colonnes en même temps */
+
+            /*a chaque tour les mêmes index de chaque colonne sont testé toutes les case à la même ligne */
+            // donc a chaque tour on test une ligne différente
+            for (int i = 0; i < 6; i++)
+            {
+
+                /* Ensuite 4 tour seront nécessaires car on a 4 combinaisons possibles maximum sur une ligne*/
+                for (int j = 0; j < 4; j++)
+                {
+                    /*Comme nous testerons 4 colonnes par tour, on utilisera j+1 j+2 et j+3 pour les 3 colonnes après j*/
+
+                    if (teamColonne[j][i].ImageLocation == violet &&
+                       teamColonne[j + 1][i].ImageLocation == violet &&
+                       teamColonne[j + 2][i].ImageLocation == violet &&
+                       teamColonne[j + 3][i].ImageLocation == null)
                     {
                         tabPositionCol[j + 3] -= 1;
                         teamColonne[j + 3][i].Load(marron); goto PasserLeTour;
@@ -1097,11 +1148,138 @@ namespace Puissance_4
                 }
             }
 
+            /*** BLOCAGE ALIGNEMENT 4 CASE VIOLLETTES EN COLONNES ***/
+
+            for (int i = 0; i < 7; i++)
+            {
+                //Ensuite à la boucle suivante on teste toutes les combinaisons possibles sur une et mêem colonne
+                // de gagner il y'aura  3 tour
+
+                for (int j = 0; j < 3; j++)
+                {
+                    if (teamColonne[i][j].ImageLocation == violet &&
+                        teamColonne[i][j + 1].ImageLocation == violet &&
+                        teamColonne[i][j + 2].ImageLocation == violet &&
+                        teamColonne[i][j + 3].ImageLocation == null)
+                    // sur une colonne la seule manière de gagner est toujours vers le haut
+                    // Donc l'index le plus gros j+3 sera le seul a devoir être nul
+                    {
+                        tabPositionCol[i] -= 1;
+                        teamColonne[i][j + 3].Load(marron); goto PasserLeTour;
+                    }
+                }
+
+            }
+
+            /*** BLOCAGE ALIGNEMENT 3 CASES VIOLETTES EN LIGNES ***/
+            for (int i = 0; i < 6; i++)
+            {
+
+                /* Ensuite 5 tour nécessaires*/
+                for (int j = 0; j < 5; j++)
+                {
+
+
+                    if (teamColonne[j][i].ImageLocation == violet &&
+                       teamColonne[j + 1][i].ImageLocation == violet &&
+                       teamColonne[j + 2][i].ImageLocation == null)
+                    {
+                        tabPositionCol[j + 2] -= 1;
+                        teamColonne[j + 2][i].Load(marron); goto PasserLeTour;
+                    }
+
+                    if (teamColonne[j][i].ImageLocation == violet &&
+                   teamColonne[j + 1][i].ImageLocation == null &&
+                   teamColonne[j + 2][i].ImageLocation == violet)
+                    {
+                        tabPositionCol[j + 1] -= 1;
+                        teamColonne[j + 1][i].Load(marron); goto PasserLeTour;
+                    }
+
+                    if (teamColonne[j][i].ImageLocation == null &&
+                   teamColonne[j + 1][i].ImageLocation == violet &&
+                   teamColonne[j + 2][i].ImageLocation == violet)
+                    {
+                        tabPositionCol[j] -= 1;
+                        teamColonne[j][i].Load(marron); goto PasserLeTour;
+
+
+
+                    }
+                }
+            }
+
+
+            /*** BLOCAGE ALIGNEMENT 3 CASE VIOLLETTES EN COLONNES ***/
+            for (int i = 0; i < 7; i++)
+            {
+                //Ensuite à la boucle suivante on teste toutes les combinaisons possibles sur une et mêem colonne
+                // de gagner il y'aura  5 tour
+
+                for (int j = 0; j < 5; j++)
+                {
+                    if (teamColonne[i][j].ImageLocation == violet &&
+                        teamColonne[i][j + 1].ImageLocation == violet &&
+                        teamColonne[i][j + 2].ImageLocation == null)
+                    // sur une colonne la seule manière de gagner est toujours vers le haut
+                    // Donc l'index le plus gros j+3 sera le seul a devoir être nul
+                    {
+                        tabPositionCol[i] -= 1;
+                        teamColonne[i][j + 2].Load(marron); goto PasserLeTour;
+                    }
+                }
+
+            }
+
+            /*** BLOCAGE ALIGNEMENT 2 CASES VIOLETTES EN LIGNES ***/
+            for (int i = 0; i < 6; i++)
+            {
+
+                /* Ensuite 6 tour nécessaires*/
+                for (int j = 0; j < 6; j++)
+                {
+
+
+                    if (teamColonne[j][i].ImageLocation == violet &&
+                       teamColonne[j + 1][i].ImageLocation == null)
+                    {
+                        tabPositionCol[j + 1] -= 1;
+                        teamColonne[j + 1][i].Load(marron); goto PasserLeTour;
+                    }
+
+                    if (teamColonne[j][i].ImageLocation == null &&
+                   teamColonne[j + 1][i].ImageLocation == violet)
+                    {
+                        tabPositionCol[j] -= 1;
+                        teamColonne[j][i].Load(marron); goto PasserLeTour;
+                    }
+                }
+            }
+            /*** BLOCAGE ALIGNEMENT 2 CASE VIOLLETTES EN COLONNES ***/
+            for (int i = 0; i < 7; i++)
+            {
+                //Ensuite à la boucle suivante on teste toutes les combinaisons possibles sur une et mêem colonne
+                // de gagner il y'aura  4 tour
+
+                for (int j = 0; j < 5; j++)
+                {
+                    if (teamColonne[i][j].ImageLocation == violet &&
+                        teamColonne[i][j + 1].ImageLocation == null)
+                    // sur une colonne la seule manière de gagner est toujours vers le haut
+                    // Donc l'index le plus gros j+3 sera le seul a devoir être nul
+                    {
+                        tabPositionCol[i] -= 1;
+                        teamColonne[i][j + 1].Load(marron); goto PasserLeTour;
+                    }
+                }
+
+            }
 
             PasserLeTour:;
-        
 
-            
+
+
+
         }
     }
 }
