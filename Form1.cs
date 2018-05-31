@@ -1038,6 +1038,19 @@ namespace Puissance_4
             }
 
             /**** TAKEDOWN EN LIGNE MARRON ***/
+            /***   Je vais indiquer à Vegeta quand est ce qu'il peut jouer en hauteur 
+             car si on ne lui dit pas, l'ordinateur ne pourra pas savoir par lui même quand il peut 
+             jouer sur la ligne 2,3,4 par exemple. Il mettra des couleur au dessus des cases vides
+             Ce qui n'est pas logiques, ***/
+
+            /*Je vais donc coder quand c'est nécessaire une condition dans les boucles qui le permettra
+             de vérifier que la case sur laquelle il veut jouer n'a pas de case vide en dessous, seul la ligne 1
+             ne sera pas prise en compte car c'est la première ligne. */
+
+            bool auDelaPremiereLigne = false;
+            // Passera a vrai si on est au de là d'un tour et sera réinitilisé à false après les boucles concernés
+
+            // a chaque tour on passe à la ligne suivante
             for (int i = 0; i < 6; i++)
             {
 
@@ -1049,45 +1062,110 @@ namespace Puissance_4
                     if (teamColonne[j][i].ImageLocation == marron &&
                        teamColonne[j + 1][i].ImageLocation == marron &&
                        teamColonne[j + 2][i].ImageLocation == marron &&
-                       teamColonne[j + 3][i].ImageLocation == null)
+                       teamColonne[j + 3][i].ImageLocation == null && !auDelaPremiereLigne)
                     {
                         tabPositionCol[j + 3] -= 1;
                         teamColonne[j + 3][i].Load(marron); goto PasserLeTour;
                     }
+                        if (teamColonne[j][i].ImageLocation == marron &&
+                           teamColonne[j + 1][i].ImageLocation == marron &&
+                           teamColonne[j + 2][i].ImageLocation == marron &&
+                           teamColonne[j + 3][i].ImageLocation == null && auDelaPremiereLigne &&
+                                                            teamColonne[j + 3][i-1].ImageLocation!=null)
+                            // si c'est vide à cette case là [i] et que sur la même colonne
+                            // [j+3] la case d'en bas [i-1] n'est pas vide alors Vegeta peut jouer
+                        {
+                            tabPositionCol[j + 3] -= 1;
+                            teamColonne[j + 3][i].Load(marron); goto PasserLeTour;
+                        }
 
                     if (teamColonne[j][i].ImageLocation == marron &&
                    teamColonne[j + 1][i].ImageLocation == marron &&
                    teamColonne[j + 2][i].ImageLocation == null &&
-                   teamColonne[j + 3][i].ImageLocation == marron)
+                   teamColonne[j + 3][i].ImageLocation == marron && !auDelaPremiereLigne)
                     {
                         tabPositionCol[j + 2] -= 1;
                         teamColonne[j + 2][i].Load(marron); goto PasserLeTour;
                     }
 
+                        if (teamColonne[j][i].ImageLocation == marron &&
+                           teamColonne[j + 1][i].ImageLocation == marron &&
+                           teamColonne[j + 2][i].ImageLocation == null &&
+                           teamColonne[j + 3][i].ImageLocation == marron && auDelaPremiereLigne &&
+                                                            teamColonne[j + 2][i - 1].ImageLocation != null)
+                        {
+                            tabPositionCol[j + 2] -= 1;
+                            teamColonne[j + 2][i].Load(marron); goto PasserLeTour;
+                        }
+
+
+
                     if (teamColonne[j][i].ImageLocation == marron &&
                    teamColonne[j + 1][i].ImageLocation == null &&
                    teamColonne[j + 2][i].ImageLocation == marron &&
-                   teamColonne[j + 3][i].ImageLocation == marron)
+                   teamColonne[j + 3][i].ImageLocation == marron && !auDelaPremiereLigne)
                     {
                         tabPositionCol[j + 1] -= 1;
                         teamColonne[j + 1][i].Load(marron); goto PasserLeTour;
                     }
 
+                        if (teamColonne[j][i].ImageLocation == marron &&
+                               teamColonne[j + 1][i].ImageLocation == null &&
+                               teamColonne[j + 2][i].ImageLocation == marron &&
+                               teamColonne[j + 3][i].ImageLocation == marron && auDelaPremiereLigne &&
+                                                                teamColonne[j + 1][i - 1].ImageLocation != null)
+                        {
+                            tabPositionCol[j + 1] -= 1;
+                            teamColonne[j + 1][i].Load(marron); goto PasserLeTour;
+                        }
+
                     if (teamColonne[j][i].ImageLocation == null &&
                    teamColonne[j + 1][i].ImageLocation == marron &&
                    teamColonne[j + 2][i].ImageLocation == marron &&
-                   teamColonne[j + 3][i].ImageLocation == marron)
+                   teamColonne[j + 3][i].ImageLocation == marron && !auDelaPremiereLigne)
                     {
                         tabPositionCol[j] -= 1;
                         teamColonne[j][i].Load(marron); goto PasserLeTour;
                     }
 
+                        if (teamColonne[j][i].ImageLocation == marron &&
+                               teamColonne[j + 1][i].ImageLocation == marron &&
+                               teamColonne[j + 2][i].ImageLocation == null &&
+                               teamColonne[j + 3][i].ImageLocation == marron && auDelaPremiereLigne &&
+                                                                teamColonne[j][i - 1].ImageLocation != null)
+                        {
+                            tabPositionCol[j] -= 1;
+                            teamColonne[j][i].Load(marron); goto PasserLeTour;
+                        }
+
 
 
                 }
+
+                auDelaPremiereLigne = true;
             }
 
+            auDelaPremiereLigne = false;
 
+
+            /*** TAKEDOWN D'ALIGNEMENT A 4 CASE VIOLETTES EN DIAGONALES ****/
+           /*
+            * En comptant uniquement toutes les diagonales pouvant composés au moins 4 cases
+            * en allant vers le haut et la droites nous en avons 6
+            * on en a 6 aussi en allant vers le haut et la gauche. donc 12 au totales à tester
+            * 
+            * Mais elle ne sont pas toutes de la même tailles, il y'en a
+            * 4 de 6 cases, 4 de 5 cases et 4 de cases
+            * Pour jouer en diagonales on testera si la case juste en dessous est vide excépté à la ligne 1
+            * 
+            * On regroupe dans chaque boucle les diagonales allant dans le même sens
+            */
+
+
+
+
+
+        
 
 
 
@@ -1110,34 +1188,72 @@ namespace Puissance_4
                     if (teamColonne[j][i].ImageLocation == violet &&
                        teamColonne[j + 1][i].ImageLocation == violet &&
                        teamColonne[j + 2][i].ImageLocation == violet &&
-                       teamColonne[j + 3][i].ImageLocation == null)
+                       teamColonne[j + 3][i].ImageLocation == null && !auDelaPremiereLigne)
                     {
                         tabPositionCol[j + 3] -= 1;
                         teamColonne[j + 3][i].Load(marron); goto PasserLeTour;
                     }
 
+                        if (teamColonne[j][i].ImageLocation == violet &&
+                           teamColonne[j + 1][i].ImageLocation == violet &&
+                           teamColonne[j + 2][i].ImageLocation == violet &&
+                           teamColonne[j + 3][i].ImageLocation == null && auDelaPremiereLigne
+                                            && teamColonne[j + 3][i-1].ImageLocation != null)
+                        {
+                            tabPositionCol[j + 3] -= 1;
+                            teamColonne[j + 3][i].Load(marron); goto PasserLeTour;
+                        }
+
                     if (teamColonne[j][i].ImageLocation == violet &&
                    teamColonne[j + 1][i].ImageLocation == violet &&
                    teamColonne[j + 2][i].ImageLocation == null &&
-                   teamColonne[j + 3][i].ImageLocation == violet)
+                   teamColonne[j + 3][i].ImageLocation == violet && !auDelaPremiereLigne)
                     {
                         tabPositionCol[j + 2] -= 1;
                         teamColonne[j + 2][i].Load(marron); goto PasserLeTour;
                     }
+                        if (teamColonne[j][i].ImageLocation == violet &&
+                               teamColonne[j + 1][i].ImageLocation == violet &&
+                               teamColonne[j + 2][i].ImageLocation == null &&
+                               teamColonne[j + 3][i].ImageLocation == violet && auDelaPremiereLigne
+                                                && teamColonne[j + 2][i - 1].ImageLocation != null)
+                        {
+                            tabPositionCol[j + 2] -= 1;
+                            teamColonne[j + 2][i].Load(marron); goto PasserLeTour;
+                        }
 
                     if (teamColonne[j][i].ImageLocation == violet &&
                    teamColonne[j + 1][i].ImageLocation == null &&
                    teamColonne[j + 2][i].ImageLocation == violet &&
-                   teamColonne[j + 3][i].ImageLocation == violet)
+                   teamColonne[j + 3][i].ImageLocation == violet && !auDelaPremiereLigne)
                     {
                         tabPositionCol[j + 1] -= 1;
                         teamColonne[j + 1][i].Load(marron); goto PasserLeTour;
                     }
 
+                        if (teamColonne[j][i].ImageLocation == violet &&
+                               teamColonne[j + 1][i].ImageLocation == null &&
+                               teamColonne[j + 2][i].ImageLocation == violet &&
+                               teamColonne[j + 3][i].ImageLocation == violet && auDelaPremiereLigne
+                                                && teamColonne[j + 1][i - 1].ImageLocation != null)
+                        {
+                            tabPositionCol[j + 1] -= 1;
+                            teamColonne[j + 1][i].Load(marron); goto PasserLeTour;
+                        }
+
                     if (teamColonne[j][i].ImageLocation == null &&
                    teamColonne[j + 1][i].ImageLocation == violet &&
                    teamColonne[j + 2][i].ImageLocation == violet &&
-                   teamColonne[j + 3][i].ImageLocation == violet)
+                   teamColonne[j + 3][i].ImageLocation == violet && !auDelaPremiereLigne)
+                    {
+                        tabPositionCol[j] -= 1;
+                        teamColonne[j][i].Load(marron); goto PasserLeTour;
+                    }
+                    if (teamColonne[j][i].ImageLocation == null &&
+                           teamColonne[j + 1][i].ImageLocation == violet &&
+                           teamColonne[j + 2][i].ImageLocation == violet &&
+                           teamColonne[j + 3][i].ImageLocation == violet && auDelaPremiereLigne
+                                            && teamColonne[j][i - 1].ImageLocation != null)
                     {
                         tabPositionCol[j] -= 1;
                         teamColonne[j][i].Load(marron); goto PasserLeTour;
@@ -1146,8 +1262,11 @@ namespace Puissance_4
 
 
                 }
+
+                auDelaPremiereLigne = true;
             }
 
+            auDelaPremiereLigne = false;
             /*** BLOCAGE ALIGNEMENT 4 CASE VIOLLETTES EN COLONNES ***/
 
             for (int i = 0; i < 7; i++)
@@ -1182,33 +1301,58 @@ namespace Puissance_4
 
                     if (teamColonne[j][i].ImageLocation == violet &&
                        teamColonne[j + 1][i].ImageLocation == violet &&
-                       teamColonne[j + 2][i].ImageLocation == null)
+                       teamColonne[j + 2][i].ImageLocation == null && !auDelaPremiereLigne)
                     {
                         tabPositionCol[j + 2] -= 1;
                         teamColonne[j + 2][i].Load(marron); goto PasserLeTour;
                     }
 
+                        if (teamColonne[j][i].ImageLocation == violet &&
+                           teamColonne[j + 1][i].ImageLocation == violet &&
+                           teamColonne[j + 2][i].ImageLocation == null && auDelaPremiereLigne
+                                            && teamColonne[j + 2][i-1].ImageLocation != null)
+                        {
+                            tabPositionCol[j + 2] -= 1;
+                            teamColonne[j + 2][i].Load(marron); goto PasserLeTour;
+                        }
+
                     if (teamColonne[j][i].ImageLocation == violet &&
                    teamColonne[j + 1][i].ImageLocation == null &&
-                   teamColonne[j + 2][i].ImageLocation == violet)
+                   teamColonne[j + 2][i].ImageLocation == violet && !auDelaPremiereLigne)
                     {
                         tabPositionCol[j + 1] -= 1;
                         teamColonne[j + 1][i].Load(marron); goto PasserLeTour;
                     }
 
+                        if (teamColonne[j][i].ImageLocation == violet &&
+                               teamColonne[j + 1][i].ImageLocation == null &&
+                               teamColonne[j + 2][i].ImageLocation == violet && auDelaPremiereLigne
+                                                && teamColonne[j + 1][i - 1].ImageLocation != null)
+                        {
+                            tabPositionCol[j + 1] -= 1;
+                            teamColonne[j + 1][i].Load(marron); goto PasserLeTour;
+                        }
+
                     if (teamColonne[j][i].ImageLocation == null &&
                    teamColonne[j + 1][i].ImageLocation == violet &&
-                   teamColonne[j + 2][i].ImageLocation == violet)
+                   teamColonne[j + 2][i].ImageLocation == violet && !auDelaPremiereLigne)
                     {
                         tabPositionCol[j] -= 1;
                         teamColonne[j][i].Load(marron); goto PasserLeTour;
-
-
-
                     }
-                }
+
+                        if (teamColonne[j][i].ImageLocation == null &&
+                               teamColonne[j + 1][i].ImageLocation == violet &&
+                               teamColonne[j + 2][i].ImageLocation == violet && auDelaPremiereLigne
+                                                && teamColonne[j][i - 1].ImageLocation != null)
+                        {
+                            tabPositionCol[j] -= 1;
+                            teamColonne[j][i].Load(marron); goto PasserLeTour;
+                        }
+                } auDelaPremiereLigne = true;
             }
 
+            auDelaPremiereLigne = false;
 
             /*** BLOCAGE ALIGNEMENT 3 CASE VIOLLETTES EN COLONNES ***/
             for (int i = 0; i < 7; i++)
@@ -1241,20 +1385,38 @@ namespace Puissance_4
 
 
                     if (teamColonne[j][i].ImageLocation == violet &&
-                       teamColonne[j + 1][i].ImageLocation == null)
+                       teamColonne[j + 1][i].ImageLocation == null && !auDelaPremiereLigne)
                     {
                         tabPositionCol[j + 1] -= 1;
                         teamColonne[j + 1][i].Load(marron); goto PasserLeTour;
                     }
 
+                        if (teamColonne[j][i].ImageLocation == violet &&
+                           teamColonne[j + 1][i].ImageLocation == null && auDelaPremiereLigne
+                                    && teamColonne[j + 1][i-1].ImageLocation != null)
+                        {
+                            tabPositionCol[j + 1] -= 1;
+                            teamColonne[j + 1][i].Load(marron); goto PasserLeTour;
+                        }
+
                     if (teamColonne[j][i].ImageLocation == null &&
-                   teamColonne[j + 1][i].ImageLocation == violet)
+                   teamColonne[j + 1][i].ImageLocation == violet && !auDelaPremiereLigne)
                     {
                         tabPositionCol[j] -= 1;
                         teamColonne[j][i].Load(marron); goto PasserLeTour;
                     }
-                }
+
+                        if (teamColonne[j][i].ImageLocation == null &&
+                               teamColonne[j + 1][i].ImageLocation == violet && auDelaPremiereLigne
+                                        && teamColonne[j][i - 1].ImageLocation != null)
+                        {
+                            tabPositionCol[j] -= 1;
+                            teamColonne[j][i].Load(marron); goto PasserLeTour;
+                        }
+                } auDelaPremiereLigne = true;
             }
+
+            auDelaPremiereLigne = false;
             /*** BLOCAGE ALIGNEMENT 2 CASE VIOLLETTES EN COLONNES ***/
             for (int i = 0; i < 7; i++)
             {
