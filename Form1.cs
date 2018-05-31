@@ -56,7 +56,9 @@ namespace Puissance_4
         // Elles auront pour rôle de déterminer quel case sera affecter
 
         static int posColonne = 5, posColonne2 = 5, posColonne3 = 5, posColonne4 = 5,
-            posColonne5 = 5, posColonne6 = 5, posColonne7 = 5;
+            posColonne5 = 5, posColonne6 = 5, posColonne7 = 5; // Ces variables
+        // seront utilisés comme des index jusqu'a 0 en décrémentant donc elles valent 6 dans un certain sens..
+        // enfin je crois XD MDR PTDR LOL
 
         int[] tabPositionCol = { posColonne, posColonne2, posColonne3, posColonne4,
             posColonne5, posColonne6, posColonne7};
@@ -167,7 +169,8 @@ namespace Puissance_4
                         // le joueur 1 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 2
                         label3.Text = "Tour de " + adversaire;
 
-                        if (!mode)
+                        if (!mode && !Verifier()) // Il faut mettre la méthode vérifier
+                            // sinon Même si le joueur un aligne 4 couleurs Vegeta va continuer malgré tout
                         {
                             Vegeta();
                         }
@@ -231,7 +234,7 @@ namespace Puissance_4
                         colonne2[tabPositionCol[1]].Load(violet); tabPositionCol[1] -= 1;
                         // le joueur 1 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 2
                         label3.Text = "Tour de " + adversaire;
-                        if (!mode)
+                        if (!mode && !Verifier())
                         {
                             Vegeta();
                         }
@@ -295,7 +298,7 @@ namespace Puissance_4
                         colonne3[tabPositionCol[2]].Load(violet); tabPositionCol[2] -= 1;
                         // le joueur 1 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 2
                         label3.Text = "Tour de " + adversaire;
-                        if (!mode)
+                        if (!mode && !Verifier())
                         {
                             Vegeta();
                         }
@@ -356,7 +359,7 @@ namespace Puissance_4
                         colonne4[tabPositionCol[3]].Load(violet); tabPositionCol[3] -= 1;
                         // le joueur 1 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 2
                         label3.Text = "Tour de " + adversaire;
-                        if (!mode)
+                        if (!mode && !Verifier())
                         {
                             Vegeta();
                         }
@@ -416,7 +419,7 @@ namespace Puissance_4
                         colonne5[tabPositionCol[4]].Load(violet); tabPositionCol[4] -= 1;
                         // le joueur 1 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 2
                         label3.Text = "Tour de " + adversaire;
-                        if (!mode)
+                        if (!mode && !Verifier())
                         {
                             Vegeta();
                         }
@@ -477,7 +480,7 @@ namespace Puissance_4
                         colonne6[tabPositionCol[5]].Load(violet); tabPositionCol[5] -= 1;
                         // le joueur 1 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 2
                         label3.Text = "Tour de " + adversaire;
-                        if (!mode)
+                        if (!mode && !Verifier())
                         {
                             Vegeta();
                         }
@@ -538,7 +541,7 @@ namespace Puissance_4
                         colonne7[tabPositionCol[6]].Load(violet); tabPositionCol[6] -= 1;
                         // le joueur 1 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 2
                         label3.Text = "Tour de " + adversaire;
-                        if (!mode)
+                        if (!mode && !Verifier())
                         {
                             Vegeta();
                         }
@@ -1174,86 +1177,72 @@ namespace Puissance_4
                     if( teamColonne[j][i].ImageLocation == marron &&
                         teamColonne[j+1][i+1].ImageLocation == marron &&
                         teamColonne[j + 2][i + 2].ImageLocation == marron &&
-                        teamColonne[j + 3][i + 3].ImageLocation == null && !auDelaPremiereLigne)
+                        teamColonne[j + 3][i + 3].ImageLocation == null && 
+                                        teamColonne[j + 3][i + 2].ImageLocation != null)
                     {
                         teamColonne[j + 3][i + 3].ImageLocation = marron;
+                        tabPositionCol[j + 3]-=1;
                         goto PasserLeTour;
                     }
-
-                        if (teamColonne[j][i].ImageLocation == marron &&
-                            teamColonne[j + 1][i + 1].ImageLocation == marron &&
-                            teamColonne[j + 2][i + 2].ImageLocation == marron &&
-                            teamColonne[j + 3][i + 3].ImageLocation == null && !auDelaPremiereLigne
-                            && auDelaPremiereLigne && teamColonne[j+3][i+2].ImageLocation != null )
-                            // attention ici on ne mets -1 mais on diminue juste la somme
-                            // -1 sera nécessaire pour i seulement
-                        {
-                            teamColonne[j + 3][i + 3].ImageLocation = marron;
-                            goto PasserLeTour;
-                        }
 
                     if (teamColonne[j][i].ImageLocation == marron &&
                         teamColonne[j + 1][i + 1].ImageLocation == marron &&
                         teamColonne[j + 2][i + 2].ImageLocation == null &&
-                        teamColonne[j + 3][i + 3].ImageLocation == marron && !auDelaPremiereLigne)
+                        teamColonne[j + 3][i + 3].ImageLocation == marron &&
+                                        teamColonne[j + 2][i + 1].ImageLocation != null)
                     {
                         teamColonne[j + 2][i + 2].ImageLocation = marron;
+                        tabPositionCol[j + 2] -= 1;
                         goto PasserLeTour;
                     }
-
-                        if (teamColonne[j][i].ImageLocation == marron &&
-                            teamColonne[j + 1][i + 1].ImageLocation == marron &&
-                            teamColonne[j + 2][i + 2].ImageLocation == null &&
-                            teamColonne[j + 3][i + 3].ImageLocation == marron && !auDelaPremiereLigne
-                            && auDelaPremiereLigne && teamColonne[j+2][i + 1].ImageLocation != null)
-                        {
-                            teamColonne[j + 2][i + 2].ImageLocation = marron;
-                            goto PasserLeTour;
-                        }
 
                     if (teamColonne[j][i].ImageLocation == marron &&
                         teamColonne[j + 1][i + 1].ImageLocation == null &&
                         teamColonne[j + 2][i + 2].ImageLocation == marron &&
-                        teamColonne[j + 3][i + 3].ImageLocation == marron && !auDelaPremiereLigne)
+                        teamColonne[j + 3][i + 3].ImageLocation == marron &&
+                                        teamColonne[j + 1][i].ImageLocation != null)
                     {
                         teamColonne[j + 1][i + 1].ImageLocation = marron;
+                        tabPositionCol[j + 1] -= 1;
                         goto PasserLeTour;
                     }
 
-                        if (teamColonne[j][i].ImageLocation == marron &&
-                            teamColonne[j + 1][i + 1].ImageLocation == null &&
-                            teamColonne[j + 2][i + 2].ImageLocation == marron &&
-                            teamColonne[j + 3][i + 3].ImageLocation == marron && !auDelaPremiereLigne
-                            && auDelaPremiereLigne && teamColonne[j + 1][i].ImageLocation != null)
-                        {
-                            teamColonne[j + 1][i + 1].ImageLocation = marron;
-                            goto PasserLeTour;
-                        }
+                    // Pour la pemière case à la première ligne au tour 0 ils faut faire un code adapté
+                    // Car on ne doit pas tester la condition teamcolonne[j][i-1] pour une ligne en dessous qui n'existe pas
 
-                    if (teamColonne[j][i].ImageLocation == null &&
-                    teamColonne[j + 1][i + 1].ImageLocation == marron &&
-                    teamColonne[j + 2][i + 2].ImageLocation == marron &&
-                    teamColonne[j + 3][i + 3].ImageLocation == marron && !auDelaPremiereLigne)
+                    if (i == 0)
                     {
-                        teamColonne[j + 1][i + 1].ImageLocation = marron;
-                        goto PasserLeTour;
-                    }
-
                         if (teamColonne[j][i].ImageLocation == null &&
                             teamColonne[j + 1][i + 1].ImageLocation == marron &&
                             teamColonne[j + 2][i + 2].ImageLocation == marron &&
-                            teamColonne[j + 3][i + 3].ImageLocation == marron && !auDelaPremiereLigne
-                            && auDelaPremiereLigne && teamColonne[j][i-1].ImageLocation != null)
+                            teamColonne[j + 3][i + 3].ImageLocation == marron)
                         {
                             teamColonne[j][i].ImageLocation = marron;
+                            tabPositionCol[j] -= 1;
                             goto PasserLeTour;
                         }
+                    }
+
+                    else  if (i > 0)
+                    {
+                        if (teamColonne[j][i].ImageLocation == null &&
+                            teamColonne[j + 1][i + 1].ImageLocation == marron &&
+                            teamColonne[j + 2][i + 2].ImageLocation == marron &&
+                            teamColonne[j + 3][i + 3].ImageLocation == marron &&
+                                            teamColonne[j][i - 1].ImageLocation != null)
+                        {
+                            teamColonne[j][i].ImageLocation = marron;
+                            tabPositionCol[j] -= 1;
+                            goto PasserLeTour;
+                        }
+
+                    }
+
                 }
-                auDelaPremiereLigne = true;
+               
             }
 
-            auDelaPremiereLigne = false;
-
+           
 
             // à chaque tour on démarre à la case de la diagonale situé à la ligne au dessus
             // toujours depuis la dernière colonne
@@ -1270,85 +1259,68 @@ namespace Puissance_4
                     if (teamColonne[j][i].ImageLocation == marron &&
                         teamColonne[j - 1][i + 1].ImageLocation == marron &&
                         teamColonne[j - 2][i + 2].ImageLocation == marron &&
-                        teamColonne[j - 3][i + 3].ImageLocation == null && !auDelaPremiereLigne)
-                    {
-                        teamColonne[j - 3][i + 3].ImageLocation = marron;
-                        goto PasserLeTour;
-                    }
-
-                    if (teamColonne[j][i].ImageLocation == marron &&
-                        teamColonne[j - 1][i + 1].ImageLocation == marron &&
-                        teamColonne[j - 2][i + 2].ImageLocation == marron &&
-                        teamColonne[j - 3][i + 3].ImageLocation == null && !auDelaPremiereLigne
-                        && auDelaPremiereLigne && teamColonne[j - 3][i + 2].ImageLocation != null)
+                        teamColonne[j - 3][i + 3].ImageLocation == null && teamColonne[j - 3][i + 2].ImageLocation != null)
                     // attention ici on ne mets -1 mais on diminue juste la somme
                     // -1 sera nécessaire pour i seulement
                     {
                         teamColonne[j - 3][i + 3].ImageLocation = marron;
+                        tabPositionCol[j - 3] -= 1;
                         goto PasserLeTour;
                     }
+                    
 
                     if (teamColonne[j][i].ImageLocation == marron &&
                         teamColonne[j - 1][i + 1].ImageLocation == marron &&
                         teamColonne[j - 2][i + 2].ImageLocation == null &&
-                        teamColonne[j - 3][i + 3].ImageLocation == marron && !auDelaPremiereLigne)
+                        teamColonne[j - 3][i + 3].ImageLocation == marron && teamColonne[j - 2][i + 1].ImageLocation != null)
                     {
                         teamColonne[j - 2][i + 2].ImageLocation = marron;
+                        tabPositionCol[j - 2] -= 1;
                         goto PasserLeTour;
                     }
-
-                    if (teamColonne[j][i].ImageLocation == marron &&
-                        teamColonne[j - 1][i + 1].ImageLocation == marron &&
-                        teamColonne[j - 2][i + 2].ImageLocation == null &&
-                        teamColonne[j - 3][i + 3].ImageLocation == marron && !auDelaPremiereLigne
-                        && auDelaPremiereLigne && teamColonne[j - 2][i + 1].ImageLocation != null)
-                    {
-                        teamColonne[j - 2][i + 2].ImageLocation = marron;
-                        goto PasserLeTour;
-                    }
+                    
 
                     if (teamColonne[j][i].ImageLocation == marron &&
                         teamColonne[j - 1][i + 1].ImageLocation == null &&
                         teamColonne[j - 2][i + 2].ImageLocation == marron &&
-                        teamColonne[j - 3][i + 3].ImageLocation == marron && !auDelaPremiereLigne)
+                        teamColonne[j - 3][i + 3].ImageLocation == marron && teamColonne[j - 1][i].ImageLocation != null)
                     {
                         teamColonne[j - 1][i + 1].ImageLocation = marron;
+                        tabPositionCol[j - 1] -= 1;
                         goto PasserLeTour;
                     }
 
-                    if (teamColonne[j][i].ImageLocation == marron &&
-                        teamColonne[j - 1][i + 1].ImageLocation == null &&
-                        teamColonne[j - 2][i + 2].ImageLocation == marron &&
-                        teamColonne[j - 3][i + 3].ImageLocation == marron && !auDelaPremiereLigne
-                        && auDelaPremiereLigne && teamColonne[j - 1][i].ImageLocation != null)
+                    if (i == 0)
                     {
-                        teamColonne[j - 1][i + 1].ImageLocation = marron;
-                        goto PasserLeTour;
+                        if (teamColonne[j][i].ImageLocation == null &&
+                            teamColonne[j - 1][i + 1].ImageLocation == marron &&
+                            teamColonne[j - 2][i + 2].ImageLocation == marron &&
+                            teamColonne[j - 3][i + 3].ImageLocation == marron)
+                        {
+                            teamColonne[j][i].ImageLocation = marron;
+                            tabPositionCol[j] -= 1;
+                            goto PasserLeTour;
+                        }
                     }
 
-                    if (teamColonne[j][i].ImageLocation == null &&
-                    teamColonne[j - 1][i + 1].ImageLocation == marron &&
-                    teamColonne[j - 2][i + 2].ImageLocation == marron &&
-                    teamColonne[j - 3][i + 3].ImageLocation == marron && !auDelaPremiereLigne)
+                    else if (i > 0)
                     {
-                        teamColonne[j][i].ImageLocation = marron;
-                        goto PasserLeTour;
-                    }
+                        if (teamColonne[j][i].ImageLocation == null &&
+                            teamColonne[j - 1][i + 1].ImageLocation == marron &&
+                            teamColonne[j - 2][i + 2].ImageLocation == marron &&
+                            teamColonne[j - 3][i + 3].ImageLocation == marron &&
+                                            teamColonne[j][i - 1].ImageLocation != null)
+                        {
+                            teamColonne[j][i].ImageLocation = marron;
+                            tabPositionCol[j] -= 1;
+                            goto PasserLeTour;
+                        }
 
-                    if (teamColonne[j][i].ImageLocation == null &&
-                        teamColonne[j - 1][i + 1].ImageLocation == marron &&
-                        teamColonne[j - 2][i + 2].ImageLocation == marron &&
-                        teamColonne[j - 3][i + 3].ImageLocation == marron && !auDelaPremiereLigne
-                        && auDelaPremiereLigne && teamColonne[j][i-1].ImageLocation != null)
-                    {
-                        teamColonne[j][i].ImageLocation = marron;
-                        goto PasserLeTour;
                     }
                 }
-                auDelaPremiereLigne = true;
             }
 
-            auDelaPremiereLigne = false;
+         
 
 
 
@@ -1456,6 +1428,164 @@ namespace Puissance_4
             }
 
             auDelaPremiereLigne = false;
+
+
+            // BLOCAGE ALIGNEMENT DIAGONALES EN VIOLET 4 COULEURS *******/
+
+            // à chaque tour on démarre à la case de la diagonale situé à la ligne au dessus
+            // toujours depuis la première colonne
+
+            // On teste toutes les diagonales allant vers la droite et le haut
+            for (int i = 0; i < 3; i++)
+            {
+                // ici à chaque tour on démarre dans la colonne suivante
+                for (int j = 0; j < 4; j++)
+                {
+                    // j,j+1 fait switcher les colonnes
+                    // tandis que i, i+1 etc.. servira à switcher et tester une case sur une ligne différente
+
+                    if (teamColonne[j][i].ImageLocation == violet &&
+                        teamColonne[j + 1][i + 1].ImageLocation == violet &&
+                        teamColonne[j + 2][i + 2].ImageLocation == violet &&
+                        teamColonne[j + 3][i + 3].ImageLocation == null &&
+                                        teamColonne[j + 3][i + 2].ImageLocation != null)
+                    {
+                        teamColonne[j + 3][i + 3].ImageLocation = marron;
+                        tabPositionCol[j + 3] -= 1;
+                        goto PasserLeTour;
+                    }
+
+                    if (teamColonne[j][i].ImageLocation == violet &&
+                        teamColonne[j + 1][i + 1].ImageLocation == violet &&
+                        teamColonne[j + 2][i + 2].ImageLocation == null &&
+                        teamColonne[j + 3][i + 3].ImageLocation == violet &&
+                                        teamColonne[j + 2][i + 1].ImageLocation != null)
+                    {
+                        teamColonne[j + 2][i + 2].ImageLocation = marron;
+                        tabPositionCol[j + 2] -= 1;
+                        goto PasserLeTour;
+                    }
+
+                    if (teamColonne[j][i].ImageLocation == violet &&
+                        teamColonne[j + 1][i + 1].ImageLocation == null &&
+                        teamColonne[j + 2][i + 2].ImageLocation == violet &&
+                        teamColonne[j + 3][i + 3].ImageLocation == violet &&
+                                        teamColonne[j + 1][i].ImageLocation != null)
+                    {
+                        teamColonne[j + 1][i + 1].ImageLocation = marron;
+                        tabPositionCol[j + 1] -= 1;
+                        goto PasserLeTour;
+                    }
+
+                    // Pour la pemière case à la première ligne au tour 0 ils faut faire un code adapté
+                    // Car on ne doit pas tester la condition teamcolonne[j][i-1] pour une ligne en dessous qui n'existe pas
+
+                    if (i == 0)
+                    {
+                        if (teamColonne[j][i].ImageLocation == null &&
+                            teamColonne[j + 1][i + 1].ImageLocation == violet &&
+                            teamColonne[j + 2][i + 2].ImageLocation == violet &&
+                            teamColonne[j + 3][i + 3].ImageLocation == violet)
+                        {
+                            teamColonne[j][i].ImageLocation = marron;
+                            tabPositionCol[j] -= 1;
+                            goto PasserLeTour;
+                        }
+                    }
+
+                    else if (i > 0)
+                    {
+                        if (teamColonne[j][i].ImageLocation == null &&
+                            teamColonne[j + 1][i + 1].ImageLocation == violet &&
+                            teamColonne[j + 2][i + 2].ImageLocation == violet &&
+                            teamColonne[j + 3][i + 3].ImageLocation == violet &&
+                                            teamColonne[j][i - 1].ImageLocation != null)
+                        {
+                            teamColonne[j][i].ImageLocation = marron;
+                            tabPositionCol[j] -= 1;
+                            goto PasserLeTour;
+                        }
+
+                    }
+
+                }
+
+            }
+            // BLOCAGE MIRROIR ALIGNEMENT EN VIOLET 4 COULEURS
+            //Mirroir on test toutes les diagonales allant vers la gauche et en haut
+            for (int i = 0; i < 3; i++)
+            {
+                // ici à chaque tour on démarre dans la colonne d'avant
+                for (int j = 6; j > 2; j--)
+                {
+                    // j,j-1 fait switcher les colonnes, donc seul sur j se fera la soustraction pour reculer
+                    // vu qu'on va vers la gauche
+                    // tandis que i, i+1 etc.. servira à switcher et tester une case sur une ligne différente
+
+                    if (teamColonne[j][i].ImageLocation == violet &&
+                        teamColonne[j - 1][i + 1].ImageLocation == violet &&
+                        teamColonne[j - 2][i + 2].ImageLocation == violet &&
+                        teamColonne[j - 3][i + 3].ImageLocation == null && teamColonne[j - 3][i + 2].ImageLocation != null)
+                    // attention ici on ne mets -1 mais on diminue juste la somme
+                    // -1 sera nécessaire pour i seulement
+                    {
+                        teamColonne[j - 3][i + 3].ImageLocation = marron;
+                        tabPositionCol[j - 3] -= 1;
+                        goto PasserLeTour;
+                    }
+
+
+                    if (teamColonne[j][i].ImageLocation == violet &&
+                        teamColonne[j - 1][i + 1].ImageLocation == violet &&
+                        teamColonne[j - 2][i + 2].ImageLocation == null &&
+                        teamColonne[j - 3][i + 3].ImageLocation == violet && teamColonne[j - 2][i + 1].ImageLocation != null)
+                    {
+                        teamColonne[j - 2][i + 2].ImageLocation = marron;
+                        tabPositionCol[j - 2] -= 1;
+                        goto PasserLeTour;
+                    }
+
+
+                    if (teamColonne[j][i].ImageLocation == violet &&
+                        teamColonne[j - 1][i + 1].ImageLocation == null &&
+                        teamColonne[j - 2][i + 2].ImageLocation == violet &&
+                        teamColonne[j - 3][i + 3].ImageLocation == violet && teamColonne[j - 1][i].ImageLocation != null)
+                    {
+                        teamColonne[j - 1][i + 1].ImageLocation = marron;
+                        tabPositionCol[j - 1] -= 1;
+                        goto PasserLeTour;
+                    }
+
+                    if (i == 0)
+                    {
+                        if (teamColonne[j][i].ImageLocation == null &&
+                            teamColonne[j - 1][i + 1].ImageLocation == violet &&
+                            teamColonne[j - 2][i + 2].ImageLocation == violet &&
+                            teamColonne[j - 3][i + 3].ImageLocation == violet)
+                        {
+                            teamColonne[j][i].ImageLocation = marron;
+                            tabPositionCol[j] -= 1;
+                            goto PasserLeTour;
+                        }
+                    }
+
+                    else if (i > 0)
+                    {
+                        if (teamColonne[j][i].ImageLocation == null &&
+                            teamColonne[j - 1][i + 1].ImageLocation == violet &&
+                            teamColonne[j - 2][i + 2].ImageLocation == violet &&
+                            teamColonne[j - 3][i + 3].ImageLocation == violet &&
+                                            teamColonne[j][i - 1].ImageLocation != null)
+                        {
+                            teamColonne[j][i].ImageLocation = marron;
+                            tabPositionCol[j] -= 1;
+                            goto PasserLeTour;
+                        }
+
+                    }
+                }
+            }
+
             /*** BLOCAGE ALIGNEMENT 4 CASE VIOLLETTES EN COLONNES ***/
 
             for (int i = 0; i < 7; i++)
@@ -1564,6 +1694,132 @@ namespace Puissance_4
 
             }
 
+            // BLOCAGE ALIGNEMENT DIAGONALES EN VIOLET 3 COULEURS *******/
+
+            // à chaque tour on démarre à la case de la diagonale situé à la ligne au dessus
+            // toujours depuis la première colonne
+
+            // On teste toutes les diagonales allant vers la droite et le haut
+            for (int i = 0; i < 4; i++)
+            {
+                // ici à chaque tour on démarre dans la colonne suivante
+                for (int j = 0; j < 5; j++)
+                {
+                    // j,j+1 fait switcher les colonnes
+                    // tandis que i, i+1 etc.. servira à switcher et tester une case sur une ligne différente
+
+                    if (teamColonne[j][i].ImageLocation == violet &&
+                        teamColonne[j + 1][i + 1].ImageLocation == violet &&
+                        teamColonne[j + 2][i + 2].ImageLocation == null &&
+                                        teamColonne[j + 2][i + 1].ImageLocation != null)
+                    {
+                        teamColonne[j + 2][i + 2].ImageLocation = marron;
+                        tabPositionCol[j + 2] -= 1;
+                        goto PasserLeTour;
+                    }
+
+                    if (teamColonne[j][i].ImageLocation == violet &&
+                        teamColonne[j + 1][i + 1].ImageLocation == null &&
+                        teamColonne[j + 2][i + 2].ImageLocation == violet &&
+                                        teamColonne[j + 1][i].ImageLocation != null)
+                    {
+                        teamColonne[j + 1][i + 1].ImageLocation = marron;
+                        tabPositionCol[j + 1] -= 1;
+                        goto PasserLeTour;
+                    }
+
+                    // Pour la pemière case à la première ligne au tour 0 ils faut faire un code adapté
+                    // Car on ne doit pas tester la condition teamcolonne[j][i-1] pour une ligne en dessous qui n'existe pas
+
+                    if (i == 0)
+                    {
+                        if (teamColonne[j][i].ImageLocation == null &&
+                            teamColonne[j + 1][i + 1].ImageLocation == violet &&
+                            teamColonne[j + 2][i + 2].ImageLocation == violet)
+                        {
+                            teamColonne[j][i].ImageLocation = marron;
+                            tabPositionCol[j] -= 1;
+                            goto PasserLeTour;
+                        }
+                    }
+
+                    else if (i > 0)
+                    {
+                        if (teamColonne[j][i].ImageLocation == null &&
+                            teamColonne[j + 1][i + 1].ImageLocation == violet &&
+                            teamColonne[j + 2][i + 2].ImageLocation == violet &&
+                                            teamColonne[j][i - 1].ImageLocation != null)
+                        {
+                            teamColonne[j][i].ImageLocation = marron;
+                            tabPositionCol[j] -= 1;
+                            goto PasserLeTour;
+                        }
+
+                    }
+
+                }
+
+            }
+            // BLOCAGE MIRROIR ALIGNEMENT EN VIOLET 3 COULEURS
+            //Mirroir on test toutes les diagonales allant vers la gauche et en haut
+            for (int i = 0; i < 3; i++)
+            {
+                // ici à chaque tour on démarre dans la colonne d'avant
+                for (int j = 6; j > 2; j--)
+                {
+                    // j,j-1 fait switcher les colonnes, donc seul sur j se fera la soustraction pour reculer
+                    // vu qu'on va vers la gauche
+                    // tandis que i, i+1 etc.. servira à switcher et tester une case sur une ligne différente
+
+                    if (teamColonne[j][i].ImageLocation == violet &&
+                        teamColonne[j - 1][i + 1].ImageLocation == violet &&
+                        teamColonne[j - 2][i + 2].ImageLocation == null && teamColonne[j - 2][i + 1].ImageLocation != null)
+                    // attention ici on ne mets -1 mais on diminue juste la somme
+                    // -1 sera nécessaire pour i seulement
+                    {
+                        teamColonne[j - 2][i + 2].ImageLocation = marron;
+                        tabPositionCol[j - 2] -= 1;
+                        goto PasserLeTour;
+                    }
+
+
+                    if (teamColonne[j][i].ImageLocation == violet &&
+                        teamColonne[j - 1][i + 1].ImageLocation == null &&
+                        teamColonne[j - 2][i + 2].ImageLocation == violet && teamColonne[j - 1][i].ImageLocation != null)
+                    {
+                        teamColonne[j - 1][i + 1].ImageLocation = marron;
+                        tabPositionCol[j - 1] -= 1;
+                        goto PasserLeTour;
+                    }
+
+                    if (i == 0)
+                    {
+                        if (teamColonne[j][i].ImageLocation == null &&
+                            teamColonne[j - 1][i + 1].ImageLocation == violet &&
+                            teamColonne[j - 2][i + 2].ImageLocation == violet)
+                        {
+                            teamColonne[j][i].ImageLocation = marron;
+                            tabPositionCol[j] -= 1;
+                            goto PasserLeTour;
+                        }
+                    }
+
+                    else if (i > 0)
+                    {
+                        if (teamColonne[j][i].ImageLocation == null &&
+                            teamColonne[j - 1][i + 1].ImageLocation == violet &&
+                            teamColonne[j - 2][i + 2].ImageLocation == violet &&
+                            teamColonne[j][i-1].ImageLocation != null)
+                        {
+                            teamColonne[j][i].ImageLocation = marron;
+                            tabPositionCol[j] -= 1;
+                            goto PasserLeTour;
+                        }
+
+                    }
+                }
+            }
+
             /*** BLOCAGE ALIGNEMENT 2 CASES VIOLETTES EN LIGNES ***/
             for (int i = 0; i < 6; i++)
             {
@@ -1624,6 +1880,108 @@ namespace Puissance_4
                     }
                 }
 
+            }
+
+            // BLOCAGE ALIGNEMENT DIAGONALES EN VIOLET 2 COULEURS *******/
+
+            // à chaque tour on démarre à la case de la diagonale situé à la ligne au dessus
+            // toujours depuis la première colonne
+
+            // On teste toutes les diagonales allant vers la droite et le haut
+            for (int i = 0; i < 5; i++)
+            {
+                // ici à chaque tour on démarre dans la colonne suivante
+                for (int j = 0; j < 6; j++)
+                {
+                    // j,j+1 fait switcher les colonnes
+                    // tandis que i, i+1 etc.. servira à switcher et tester une case sur une ligne différente
+
+                    if (teamColonne[j][i].ImageLocation == violet &&
+                        teamColonne[j + 1][i + 1].ImageLocation == null && 
+                        teamColonne[j + 1][i].ImageLocation != null)
+                    {
+                        teamColonne[j + 1][i + 1].ImageLocation = marron;
+                        tabPositionCol[j + 1] -= 1;
+                        goto PasserLeTour;
+                    }
+
+                    // Pour la pemière case à la première ligne au tour 0 ils faut faire un code adapté
+                    // Car on ne doit pas tester la condition teamcolonne[j][i-1] pour une ligne en dessous qui n'existe pas
+
+                    if (i == 0)
+                    {
+                        if (teamColonne[j][i].ImageLocation == null &&
+                            teamColonne[j + 1][i + 1].ImageLocation == violet)
+                        {
+                            teamColonne[j][i].ImageLocation = marron;
+                            tabPositionCol[j] -= 1;
+                            goto PasserLeTour;
+                        }
+                    }
+
+                    else if (i > 0)
+                    {
+                        if (teamColonne[j][i].ImageLocation == null &&
+                            teamColonne[j + 1][i + 1].ImageLocation == violet &&
+                                            teamColonne[j][i - 1].ImageLocation != null)
+                        {
+                            teamColonne[j][i].ImageLocation = marron;
+                            tabPositionCol[j] -= 1;
+                            goto PasserLeTour;
+                        }
+
+                    }
+
+                }
+
+            }
+            // BLOCAGE MIRROIR ALIGNEMENT EN VIOLET 2 COULEURS
+            //Mirroir on test toutes les diagonales allant vers la gauche et en haut
+            for (int i = 0; i < 3; i++)
+            {
+                // ici à chaque tour on démarre dans la colonne d'avant
+                for (int j = 6; j > 2; j--)
+                {
+                    // j,j-1 fait switcher les colonnes, donc seul sur j se fera la soustraction pour reculer
+                    // vu qu'on va vers la gauche
+                    // tandis que i, i+1 etc.. servira à switcher et tester une case sur une ligne différente
+
+                    if (teamColonne[j][i].ImageLocation == violet &&
+                        teamColonne[j - 1][i + 1].ImageLocation == null && teamColonne[j-1][i].ImageLocation != null)
+                    // attention ici on ne mets -1 mais on diminue juste la somme
+                    // -1 sera nécessaire pour i seulement
+                    {
+                        teamColonne[j - 1][i + 1].ImageLocation = marron;
+                        tabPositionCol[j - 1] -= 1;
+                        goto PasserLeTour;
+                    }
+
+                    
+
+                    if (i == 0)
+                    {
+                        if (teamColonne[j][i].ImageLocation == null &&
+                            teamColonne[j - 1][i + 1].ImageLocation == violet)
+                        {
+                            teamColonne[j][i].ImageLocation = marron;
+                            tabPositionCol[j] -= 1;
+                            goto PasserLeTour;
+                        }
+                    }
+
+                    else if (i > 0)
+                    {
+                        if (teamColonne[j][i].ImageLocation == null &&
+                            teamColonne[j - 1][i + 1].ImageLocation == violet &&
+                            teamColonne[j][i - 1].ImageLocation != null)
+                        {
+                            teamColonne[j][i].ImageLocation = marron;
+                            tabPositionCol[j] -= 1;
+                            goto PasserLeTour;
+                        }
+
+                    }
+                }
             }
 
             PasserLeTour:;
