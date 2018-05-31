@@ -580,14 +580,14 @@ namespace Puissance_4
          * dans puissance 4
          */
 
-
+    
 
         static PictureBox[][] teamLigne;
         static PictureBox[][] team6;
         static PictureBox[][] team5;
         static PictureBox[][] team4;
 
-
+        
 
 
         private bool Verifier()
@@ -732,6 +732,12 @@ namespace Puissance_4
                 {pictureBox25,pictureBox20,pictureBox15,pictureBox10,pictureBox5};
             //4
             PictureBox[] Diagonale12 = { pictureBox19, pictureBox14, pictureBox9, pictureBox4 };
+
+
+            
+            // Diagonales 
+
+
 
             //Groupement des tableau de taille 6
             PictureBox[][] team6Copie =
@@ -1009,7 +1015,7 @@ namespace Puissance_4
             PictureBox[][] teamColonneCopie = { colonne1, colonne2, colonne3, colonne4, colonne5, colonne6, colonne7 };
             teamColonne = teamColonneCopie;
 
-
+            
 
 
             /*** TAKEDOWN D'ALIGNEMENT A 4 CASE EN COLONNE MARRON ***/
@@ -1148,24 +1154,207 @@ namespace Puissance_4
             auDelaPremiereLigne = false;
 
 
-            /*** TAKEDOWN D'ALIGNEMENT A 4 CASE VIOLETTES EN DIAGONALES ****/
-           /*
-            * En comptant uniquement toutes les diagonales pouvant composés au moins 4 cases
-            * en allant vers le haut et la droites nous en avons 6
-            * on en a 6 aussi en allant vers le haut et la gauche. donc 12 au totales à tester
-            * 
-            * Mais elle ne sont pas toutes de la même tailles, il y'en a
-            * 4 de 6 cases, 4 de 5 cases et 4 de cases
-            * Pour jouer en diagonales on testera si la case juste en dessous est vide excépté à la ligne 1
-            * 
-            * On regroupe dans chaque boucle les diagonales allant dans le même sens
-            */
+            /*** TAKEDOWN D'ALIGNEMENT A 4 CASE MARRONS EN DIAGONALES ****/
+            /*
+             *
+             * 
+             */
+            // à chaque tour on démarre à la case de la diagonale situé à la ligne au dessus
+            // toujours depuis la première colonne
+
+            // On teste toutes les diagonales allant vers la droite et le haut
+            for(int i=0; i<3; i++)
+            {
+                // ici à chaque tour on démarre dans la colonne suivante
+                for(int j=0; j<4; j++)
+                {
+                    // j,j+1 fait switcher les colonnes
+                    // tandis que i, i+1 etc.. servira à switcher et tester une case sur une ligne différente
+                  
+                    if( teamColonne[j][i].ImageLocation == marron &&
+                        teamColonne[j+1][i+1].ImageLocation == marron &&
+                        teamColonne[j + 2][i + 2].ImageLocation == marron &&
+                        teamColonne[j + 3][i + 3].ImageLocation == null && !auDelaPremiereLigne)
+                    {
+                        teamColonne[j + 3][i + 3].ImageLocation = marron;
+                        goto PasserLeTour;
+                    }
+
+                        if (teamColonne[j][i].ImageLocation == marron &&
+                            teamColonne[j + 1][i + 1].ImageLocation == marron &&
+                            teamColonne[j + 2][i + 2].ImageLocation == marron &&
+                            teamColonne[j + 3][i + 3].ImageLocation == null && !auDelaPremiereLigne
+                            && auDelaPremiereLigne && teamColonne[j+3][i+2].ImageLocation != null )
+                            // attention ici on ne mets -1 mais on diminue juste la somme
+                            // -1 sera nécessaire pour i seulement
+                        {
+                            teamColonne[j + 3][i + 3].ImageLocation = marron;
+                            goto PasserLeTour;
+                        }
+
+                    if (teamColonne[j][i].ImageLocation == marron &&
+                        teamColonne[j + 1][i + 1].ImageLocation == marron &&
+                        teamColonne[j + 2][i + 2].ImageLocation == null &&
+                        teamColonne[j + 3][i + 3].ImageLocation == marron && !auDelaPremiereLigne)
+                    {
+                        teamColonne[j + 2][i + 2].ImageLocation = marron;
+                        goto PasserLeTour;
+                    }
+
+                        if (teamColonne[j][i].ImageLocation == marron &&
+                            teamColonne[j + 1][i + 1].ImageLocation == marron &&
+                            teamColonne[j + 2][i + 2].ImageLocation == null &&
+                            teamColonne[j + 3][i + 3].ImageLocation == marron && !auDelaPremiereLigne
+                            && auDelaPremiereLigne && teamColonne[j+2][i + 1].ImageLocation != null)
+                        {
+                            teamColonne[j + 2][i + 2].ImageLocation = marron;
+                            goto PasserLeTour;
+                        }
+
+                    if (teamColonne[j][i].ImageLocation == marron &&
+                        teamColonne[j + 1][i + 1].ImageLocation == null &&
+                        teamColonne[j + 2][i + 2].ImageLocation == marron &&
+                        teamColonne[j + 3][i + 3].ImageLocation == marron && !auDelaPremiereLigne)
+                    {
+                        teamColonne[j + 1][i + 1].ImageLocation = marron;
+                        goto PasserLeTour;
+                    }
+
+                        if (teamColonne[j][i].ImageLocation == marron &&
+                            teamColonne[j + 1][i + 1].ImageLocation == null &&
+                            teamColonne[j + 2][i + 2].ImageLocation == marron &&
+                            teamColonne[j + 3][i + 3].ImageLocation == marron && !auDelaPremiereLigne
+                            && auDelaPremiereLigne && teamColonne[j + 1][i].ImageLocation != null)
+                        {
+                            teamColonne[j + 1][i + 1].ImageLocation = marron;
+                            goto PasserLeTour;
+                        }
+
+                    if (teamColonne[j][i].ImageLocation == null &&
+                    teamColonne[j + 1][i + 1].ImageLocation == marron &&
+                    teamColonne[j + 2][i + 2].ImageLocation == marron &&
+                    teamColonne[j + 3][i + 3].ImageLocation == marron && !auDelaPremiereLigne)
+                    {
+                        teamColonne[j + 1][i + 1].ImageLocation = marron;
+                        goto PasserLeTour;
+                    }
+
+                        if (teamColonne[j][i].ImageLocation == null &&
+                            teamColonne[j + 1][i + 1].ImageLocation == marron &&
+                            teamColonne[j + 2][i + 2].ImageLocation == marron &&
+                            teamColonne[j + 3][i + 3].ImageLocation == marron && !auDelaPremiereLigne
+                            && auDelaPremiereLigne && teamColonne[j][i-1].ImageLocation != null)
+                        {
+                            teamColonne[j][i].ImageLocation = marron;
+                            goto PasserLeTour;
+                        }
+                }
+                auDelaPremiereLigne = true;
+            }
+
+            auDelaPremiereLigne = false;
+
+
+            // à chaque tour on démarre à la case de la diagonale situé à la ligne au dessus
+            // toujours depuis la dernière colonne
+            //Mirroir on test toutes les diagonales allant vers la gauche et en haut
+            for (int i = 0; i <3; i++)
+            {
+                // ici à chaque tour on démarre dans la colonne d'avant
+                for (int j = 6; j >2; j--)
+                {
+                    // j,j-1 fait switcher les colonnes, donc seul sur j se fera la soustraction pour reculer
+                    // vu qu'on va vers la gauche
+                    // tandis que i, i+1 etc.. servira à switcher et tester une case sur une ligne différente
+
+                    if (teamColonne[j][i].ImageLocation == marron &&
+                        teamColonne[j - 1][i + 1].ImageLocation == marron &&
+                        teamColonne[j - 2][i + 2].ImageLocation == marron &&
+                        teamColonne[j - 3][i + 3].ImageLocation == null && !auDelaPremiereLigne)
+                    {
+                        teamColonne[j - 3][i + 3].ImageLocation = marron;
+                        goto PasserLeTour;
+                    }
+
+                    if (teamColonne[j][i].ImageLocation == marron &&
+                        teamColonne[j - 1][i + 1].ImageLocation == marron &&
+                        teamColonne[j - 2][i + 2].ImageLocation == marron &&
+                        teamColonne[j - 3][i + 3].ImageLocation == null && !auDelaPremiereLigne
+                        && auDelaPremiereLigne && teamColonne[j - 3][i + 2].ImageLocation != null)
+                    // attention ici on ne mets -1 mais on diminue juste la somme
+                    // -1 sera nécessaire pour i seulement
+                    {
+                        teamColonne[j - 3][i + 3].ImageLocation = marron;
+                        goto PasserLeTour;
+                    }
+
+                    if (teamColonne[j][i].ImageLocation == marron &&
+                        teamColonne[j - 1][i + 1].ImageLocation == marron &&
+                        teamColonne[j - 2][i + 2].ImageLocation == null &&
+                        teamColonne[j - 3][i + 3].ImageLocation == marron && !auDelaPremiereLigne)
+                    {
+                        teamColonne[j - 2][i + 2].ImageLocation = marron;
+                        goto PasserLeTour;
+                    }
+
+                    if (teamColonne[j][i].ImageLocation == marron &&
+                        teamColonne[j - 1][i + 1].ImageLocation == marron &&
+                        teamColonne[j - 2][i + 2].ImageLocation == null &&
+                        teamColonne[j - 3][i + 3].ImageLocation == marron && !auDelaPremiereLigne
+                        && auDelaPremiereLigne && teamColonne[j - 2][i + 1].ImageLocation != null)
+                    {
+                        teamColonne[j - 2][i + 2].ImageLocation = marron;
+                        goto PasserLeTour;
+                    }
+
+                    if (teamColonne[j][i].ImageLocation == marron &&
+                        teamColonne[j - 1][i + 1].ImageLocation == null &&
+                        teamColonne[j - 2][i + 2].ImageLocation == marron &&
+                        teamColonne[j - 3][i + 3].ImageLocation == marron && !auDelaPremiereLigne)
+                    {
+                        teamColonne[j - 1][i + 1].ImageLocation = marron;
+                        goto PasserLeTour;
+                    }
+
+                    if (teamColonne[j][i].ImageLocation == marron &&
+                        teamColonne[j - 1][i + 1].ImageLocation == null &&
+                        teamColonne[j - 2][i + 2].ImageLocation == marron &&
+                        teamColonne[j - 3][i + 3].ImageLocation == marron && !auDelaPremiereLigne
+                        && auDelaPremiereLigne && teamColonne[j - 1][i].ImageLocation != null)
+                    {
+                        teamColonne[j - 1][i + 1].ImageLocation = marron;
+                        goto PasserLeTour;
+                    }
+
+                    if (teamColonne[j][i].ImageLocation == null &&
+                    teamColonne[j - 1][i + 1].ImageLocation == marron &&
+                    teamColonne[j - 2][i + 2].ImageLocation == marron &&
+                    teamColonne[j - 3][i + 3].ImageLocation == marron && !auDelaPremiereLigne)
+                    {
+                        teamColonne[j][i].ImageLocation = marron;
+                        goto PasserLeTour;
+                    }
+
+                    if (teamColonne[j][i].ImageLocation == null &&
+                        teamColonne[j - 1][i + 1].ImageLocation == marron &&
+                        teamColonne[j - 2][i + 2].ImageLocation == marron &&
+                        teamColonne[j - 3][i + 3].ImageLocation == marron && !auDelaPremiereLigne
+                        && auDelaPremiereLigne && teamColonne[j][i-1].ImageLocation != null)
+                    {
+                        teamColonne[j][i].ImageLocation = marron;
+                        goto PasserLeTour;
+                    }
+                }
+                auDelaPremiereLigne = true;
+            }
+
+            auDelaPremiereLigne = false;
 
 
 
 
 
-        
+
 
 
 
