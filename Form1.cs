@@ -169,21 +169,27 @@ namespace Puissance_4
                         // le joueur 1 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 2
                         label3.Text = "Tour de " + adversaire;
 
-                        if (!mode && !Verifier()) // Il faut mettre la méthode vérifier
-                            // sinon Même si le joueur un aligne 4 couleurs Vegeta va continuer malgré tout
+                        if (!mode) // Il faut mettre la méthode vérifier
+                            // sinon Même si le joueur un aligne 4 et gagne couleurs Vegeta va continuer malgré tout
                         {
-                            Vegeta();
+                            vainqueur = Verifier();
+                            if (!vainqueur)
+                            {
+                                Vegeta();
+                            }
                         }
+
+
                     }
                     fichierManquant = false;
                 }
 
-                catch (Exception ex)
+                catch (Exception)
                 {
                     MessageBox.Show
                    ("Vérifiez bien que les deux fichiers marron.png et violet.png sont dans le même dossier que puissance 4. " +
-                   "Vous ne pouvez pas jouer sans eux. Fermez le jeu puis vérifiez." + ex.Message
-                   + ex.StackTrace);
+                   "Vous ne pouvez pas jouer sans eux. Fermez le jeu puis vérifiez.");
+                   //+ ex.Message+ ex.StackTrace)
                     //On casse la boucle car la valeur va rester à true et bloquez le programme
 
                     break;
@@ -192,9 +198,14 @@ namespace Puissance_4
 
             } while (fichierManquant);
 
-
-            vainqueur = Verifier();//On vérifie a chaque appuie de boutton si un alignement est trouvé
-
+            if (!vainqueur)//Il faut englober ce code sinon quand on affronte Vegeta et qu'on gagne une fois
+                // le compter de point est incrémenté deux fois
+                //Car on appelle la mthode Verifier en premier dans la condition if qui sert à faire jouer Vegeta
+                // Vainqueur deviendra vrai si le joueur 1 ou l'IA gagne et il faut que vainqueur soit faux ici
+                // cela évite donc la double atribution de point
+            {
+                vainqueur = Verifier();//On vérifie a chaque appuie de boutton si un alignement est trouvé
+            }
             if ((tour == 42 && !vainqueur) || (tour == 21 && !mode && !vainqueur))// Après avoir effectué les 42 tours le round est terminé
             {
                 label3.Text = "Personne ne gagne ce round";
@@ -234,10 +245,17 @@ namespace Puissance_4
                         colonne2[tabPositionCol[1]].Load(violet); tabPositionCol[1] -= 1;
                         // le joueur 1 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 2
                         label3.Text = "Tour de " + adversaire;
-                        if (!mode && !Verifier())
+                       if (!mode) // Il faut mettre la méthode vérifier
+                            // sinon Même si le joueur un aligne 4 et gagne couleurs Vegeta va continuer malgré tout
                         {
-                            Vegeta();
+                            vainqueur = Verifier();
+                            if (!vainqueur)
+                            {
+                                Vegeta();
+                            }
                         }
+
+
                     }
                     fichierManquant = false;
                 }
@@ -247,14 +265,23 @@ namespace Puissance_4
                     MessageBox.Show
                    ("Vérifiez bien que les deux fichiers marron.png et violet.png sont dans le même dossier que puissance 4. " +
                    "Vous ne pouvez pas jouer sans eux. Fermez le jeu puis vérifiez.");
+                   //+ ex.Message+ ex.StackTrace)
+                    //On casse la boucle car la valeur va rester à true et bloquez le programme
+
                     break;
 
                 }
 
             } while (fichierManquant);
 
-
-            vainqueur = Verifier();//On vérifie a chaque appuie de boutton si un alignement est trouvé
+            if (!vainqueur)//Il faut englober ce code sinon quand on affronte Vegeta et qu'on gagne une fois
+                // le compter de point est incrémenté deux fois
+                //Car on appelle la mthode Verifier en premier dans la condition if qui sert à faire jouer Vegeta
+                // Vainqueur deviendra vrai si le joueur 1 ou l'IA gagne et il faut que vainqueur soit faux ici
+                // cela évite donc la double atribution de point
+            {
+                vainqueur = Verifier();//On vérifie a chaque appuie de boutton si un alignement est trouvé
+            }
 
             if ((tour == 42 && !vainqueur) || (tour == 21 && !mode && !vainqueur))// Après avoir effectué les 42 tours le round est terminé
             {
@@ -298,10 +325,17 @@ namespace Puissance_4
                         colonne3[tabPositionCol[2]].Load(violet); tabPositionCol[2] -= 1;
                         // le joueur 1 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 2
                         label3.Text = "Tour de " + adversaire;
-                        if (!mode && !Verifier())
+                        if (!mode) // Il faut mettre la méthode vérifier
+                                   // sinon Même si le joueur un aligne 4 et gagne couleurs Vegeta va continuer malgré tout
                         {
-                            Vegeta();
+                            vainqueur = Verifier();
+                            if (!vainqueur)
+                            {
+                                Vegeta();
+                            }
                         }
+
+
                     }
                     fichierManquant = false;
                 }
@@ -311,13 +345,23 @@ namespace Puissance_4
                     MessageBox.Show
                    ("Vérifiez bien que les deux fichiers marron.png et violet.png sont dans le même dossier que puissance 4. " +
                    "Vous ne pouvez pas jouer sans eux. Fermez le jeu puis vérifiez.");
+                    //+ ex.Message+ ex.StackTrace)
                     //On casse la boucle car la valeur va rester à true et bloquez le programme
+
                     break;
 
                 }
 
             } while (fichierManquant);
-            vainqueur = Verifier();//On vérifie a chaque appuie de boutton si un alignement est trouvé
+
+            if (!vainqueur)//Il faut englober ce code sinon quand on affronte Vegeta et qu'on gagne une fois
+                           // le compter de point est incrémenté deux fois
+                           //Car on appelle la mthode Verifier en premier dans la condition if qui sert à faire jouer Vegeta
+                           // Vainqueur deviendra vrai si le joueur 1 ou l'IA gagne et il faut que vainqueur soit faux ici
+                           // cela évite donc la double atribution de point
+            {
+                vainqueur = Verifier();//On vérifie a chaque appuie de boutton si un alignement est trouvé
+            }
 
             if ((tour == 42 && !vainqueur) || (tour == 21 && !mode && !vainqueur))// Après avoir effectué les 42 tours le round est terminé
             {
@@ -359,10 +403,17 @@ namespace Puissance_4
                         colonne4[tabPositionCol[3]].Load(violet); tabPositionCol[3] -= 1;
                         // le joueur 1 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 2
                         label3.Text = "Tour de " + adversaire;
-                        if (!mode && !Verifier())
+                        if (!mode) // Il faut mettre la méthode vérifier
+                                   // sinon Même si le joueur un aligne 4 et gagne couleurs Vegeta va continuer malgré tout
                         {
-                            Vegeta();
+                            vainqueur = Verifier();
+                            if (!vainqueur)
+                            {
+                                Vegeta();
+                            }
                         }
+
+
                     }
                     fichierManquant = false;
                 }
@@ -372,13 +423,23 @@ namespace Puissance_4
                     MessageBox.Show
                    ("Vérifiez bien que les deux fichiers marron.png et violet.png sont dans le même dossier que puissance 4. " +
                    "Vous ne pouvez pas jouer sans eux. Fermez le jeu puis vérifiez.");
+                    //+ ex.Message+ ex.StackTrace)
                     //On casse la boucle car la valeur va rester à true et bloquez le programme
+
                     break;
 
                 }
 
             } while (fichierManquant);
-            vainqueur = Verifier();//On vérifie a chaque appuie de boutton si un alignement est trouvé
+
+            if (!vainqueur)//Il faut englober ce code sinon quand on affronte Vegeta et qu'on gagne une fois
+                           // le compter de point est incrémenté deux fois
+                           //Car on appelle la mthode Verifier en premier dans la condition if qui sert à faire jouer Vegeta
+                           // Vainqueur deviendra vrai si le joueur 1 ou l'IA gagne et il faut que vainqueur soit faux ici
+                           // cela évite donc la double atribution de point
+            {
+                vainqueur = Verifier();//On vérifie a chaque appuie de boutton si un alignement est trouvé
+            }
 
             if ((tour == 42 && !vainqueur) || (tour == 21 && !mode && !vainqueur))// Après avoir effectué les 42 tours le round est terminé
             {
@@ -419,10 +480,17 @@ namespace Puissance_4
                         colonne5[tabPositionCol[4]].Load(violet); tabPositionCol[4] -= 1;
                         // le joueur 1 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 2
                         label3.Text = "Tour de " + adversaire;
-                        if (!mode && !Verifier())
+                        if (!mode) // Il faut mettre la méthode vérifier
+                                   // sinon Même si le joueur un aligne 4 et gagne couleurs Vegeta va continuer malgré tout
                         {
-                            Vegeta();
+                            vainqueur = Verifier();
+                            if (!vainqueur)
+                            {
+                                Vegeta();
+                            }
                         }
+
+
                     }
                     fichierManquant = false;
                 }
@@ -432,14 +500,23 @@ namespace Puissance_4
                     MessageBox.Show
                    ("Vérifiez bien que les deux fichiers marron.png et violet.png sont dans le même dossier que puissance 4. " +
                    "Vous ne pouvez pas jouer sans eux. Fermez le jeu puis vérifiez.");
+                    //+ ex.Message+ ex.StackTrace)
                     //On casse la boucle car la valeur va rester à true et bloquez le programme
+
                     break;
 
                 }
 
             } while (fichierManquant);
 
-            vainqueur = Verifier();//On vérifie a chaque appuie de boutton si un alignement est trouvé
+            if (!vainqueur)//Il faut englober ce code sinon quand on affronte Vegeta et qu'on gagne une fois
+                           // le compter de point est incrémenté deux fois
+                           //Car on appelle la mthode Verifier en premier dans la condition if qui sert à faire jouer Vegeta
+                           // Vainqueur deviendra vrai si le joueur 1 ou l'IA gagne et il faut que vainqueur soit faux ici
+                           // cela évite donc la double atribution de point
+            {
+                vainqueur = Verifier();//On vérifie a chaque appuie de boutton si un alignement est trouvé
+            }
 
             if ((tour == 42 && !vainqueur) || (tour == 21 && !mode && !vainqueur))// Après avoir effectué les 42 tours le round est terminé
             {
@@ -480,10 +557,17 @@ namespace Puissance_4
                         colonne6[tabPositionCol[5]].Load(violet); tabPositionCol[5] -= 1;
                         // le joueur 1 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 2
                         label3.Text = "Tour de " + adversaire;
-                        if (!mode && !Verifier())
+                        if (!mode) // Il faut mettre la méthode vérifier
+                                   // sinon Même si le joueur un aligne 4 et gagne couleurs Vegeta va continuer malgré tout
                         {
-                            Vegeta();
+                            vainqueur = Verifier();
+                            if (!vainqueur)
+                            {
+                                Vegeta();
+                            }
                         }
+
+
                     }
                     fichierManquant = false;
                 }
@@ -493,13 +577,23 @@ namespace Puissance_4
                     MessageBox.Show
                    ("Vérifiez bien que les deux fichiers marron.png et violet.png sont dans le même dossier que puissance 4. " +
                    "Vous ne pouvez pas jouer sans eux. Fermez le jeu puis vérifiez.");
+                    //+ ex.Message+ ex.StackTrace)
                     //On casse la boucle car la valeur va rester à true et bloquez le programme
+
                     break;
 
                 }
 
             } while (fichierManquant);
-            vainqueur = Verifier();//On vérifie a chaque appuie de boutton si un alignement est trouvé
+
+            if (!vainqueur)//Il faut englober ce code sinon quand on affronte Vegeta et qu'on gagne une fois
+                           // le compter de point est incrémenté deux fois
+                           //Car on appelle la mthode Verifier en premier dans la condition if qui sert à faire jouer Vegeta
+                           // Vainqueur deviendra vrai si le joueur 1 ou l'IA gagne et il faut que vainqueur soit faux ici
+                           // cela évite donc la double atribution de point
+            {
+                vainqueur = Verifier();//On vérifie a chaque appuie de boutton si un alignement est trouvé
+            }
 
             if ((tour == 42 && !vainqueur) || (tour == 21 && !mode && !vainqueur))// Après avoir effectué les 42 tours le round est terminé
             {
@@ -541,10 +635,17 @@ namespace Puissance_4
                         colonne7[tabPositionCol[6]].Load(violet); tabPositionCol[6] -= 1;
                         // le joueur 1 vient d'effectuer son tour, le label 3 indiquera le tour du joueur 2
                         label3.Text = "Tour de " + adversaire;
-                        if (!mode && !Verifier())
+                        if (!mode) // Il faut mettre la méthode vérifier
+                                   // sinon Même si le joueur un aligne 4 et gagne couleurs Vegeta va continuer malgré tout
                         {
-                            Vegeta();
+                            vainqueur = Verifier();
+                            if (!vainqueur)
+                            {
+                                Vegeta();
+                            }
                         }
+
+
                     }
                     fichierManquant = false;
                 }
@@ -554,14 +655,23 @@ namespace Puissance_4
                     MessageBox.Show
                    ("Vérifiez bien que les deux fichiers marron.png et violet.png sont dans le même dossier que puissance 4. " +
                    "Vous ne pouvez pas jouer sans eux. Fermez le jeu puis vérifiez.");
+                    //+ ex.Message+ ex.StackTrace)
                     //On casse la boucle car la valeur va rester à true et bloquez le programme
+
                     break;
 
                 }
 
             } while (fichierManquant);
 
-            vainqueur = Verifier();//On vérifie a chaque appuie de boutton si un alignement est trouvé
+            if (!vainqueur)//Il faut englober ce code sinon quand on affronte Vegeta et qu'on gagne une fois
+                           // le compter de point est incrémenté deux fois
+                           //Car on appelle la mthode Verifier en premier dans la condition if qui sert à faire jouer Vegeta
+                           // Vainqueur deviendra vrai si le joueur 1 ou l'IA gagne et il faut que vainqueur soit faux ici
+                           // cela évite donc la double atribution de point
+            {
+                vainqueur = Verifier();//On vérifie a chaque appuie de boutton si un alignement est trouvé
+            }
 
             if ((tour == 42 && !vainqueur) || (tour == 21 && !mode && !vainqueur))// Après avoir effectué les 42 tours le round est terminé
             {
@@ -889,7 +999,7 @@ namespace Puissance_4
         private void button8_Click(object sender, EventArgs e)
         {
             // On réinitialise les variables nécessaires
-
+            vainqueur = false;
             label3.Text = "";
             button1.Enabled = true; button2.Enabled = true;
             button3.Enabled = true; button4.Enabled = true;
@@ -928,7 +1038,7 @@ namespace Puissance_4
         private void button9_Click(object sender, EventArgs e)
         {
 
-
+            vainqueur = false;
             point1 = 0; point2 = 0; lbJoueur1.Text = ""; lbJoueur2.Text = "";
             label3.Text = "";
             DesActivation();
