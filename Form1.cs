@@ -1938,10 +1938,7 @@ namespace Puissance_4
                 /* Ensuite 6 tour nécessaires*/
                 for (int j = 0; j < 6; j++)
                 {
-                    if(Enchainer() && i==0)//Code testé uniquement pour la ligne 1 explication plus bas
-                    {
-                        goto PasserLeTour;
-                    }
+                   
 
 
                     if (teamColonne[j][i].ImageLocation == violet &&
