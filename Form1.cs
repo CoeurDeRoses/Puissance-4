@@ -1719,6 +1719,32 @@ namespace Puissance_4
 
             }
 
+            /* 
+             * Au lieu de simplement se contenter de bloquer et d'attendre d'aligner 3 couleur
+             * de manière indirecte puis saisir l'opportunité à gagner, 
+             * puisqu'elles résultent du blocage qu'il fait uniquement
+             * Vegeta devra regarder partout pour voir si il peut faire le plus grand alignement
+             * 
+             * Par exemple si le joueur 1 n'a que des alignement de 2 couleurs, et que c'est le tour 
+             * de Vegeta et qu'il peut en aligner 3 car il a déja 2 couleur ensemble, il prend les devant
+             * mais à condition que l'alignement possède non seulement la 3 ème couleur mais aussi
+             * une autre case vide d'alignement possible, donc 4 au total, il ne doit pas aligner 3 couleur simplement
+             * pour remplir et se retrouve bloqué le jeu mais il faut le faire avec du sens et lui faire comprendre
+             * qu'il doit le faire si cela peut lui permettre de gagner.
+             * 
+             * Le cas dès alignement sur à 4 couleur étant traités, je vais coder les cas 
+             * des alignement a 3 et 2 couleurs. Il doivent tous être placer avant les blocage
+             * trier par nombre de cas
+             * 
+             * Code Opportunité 3 couleur avant Blocage 3 couleur mais avant Opportunité à 2 couleur
+             * Code Opportunité 2 couleur avant blocage 2 couleur
+             * 
+             * Comme pour le Takedown à 4 couleur situé avant le blocage.
+             * 
+             * Si Vegeta constate que le joueur 1 possède actuellement un plus grand nombre d'alignement
+             * il restera sur sa stratégie de blocage
+             */
+
             /*** BLOCAGE ALIGNEMENT 3 CASES VIOLETTES EN LIGNES ***/
             for (int i = 0; i < 6; i++)
             {
@@ -2103,98 +2129,7 @@ namespace Puissance_4
 
         }
 
-        /*
-         * SI le joueur 1 mets des couleurs un peu partout sans chercher à les aligner rapidement
-         * Cette fonction va permettre à Vegeta de vérifier si il peut aligner un lus grand nombre
-         * de couleurs avant le J1.
-         * 
-         * Supposons par exemple que le J1 mets une couleur en bas derniyre case à droite Vegeta le bloque juste à côté
-         * Puis le J1 mets une couleur en bas à dernière cas gauche. Au lieu de le bloquer encore Vegeta place une couleur
-         * à côté celle qui l'a précédemment mise.
-         * 
-         * Cette fonction va permettre à Vegeta de prendre l'offensive et d'être le premier à aligner 
-         * un plus grand nombre de couleur et potentielement Enchainer pour gagner.
-         * 
-         * Il faudra une boucle permettant à Vegeta de Vérifier si effectivement le J1 n'a pas l'air 
-         * d'aligner pour gagner rapidement et de jouer ne conséquence Enchainer envoie true. Dans le cas contraire, il y'a
-         * une menace de la part du J1 de gagner et Vegeta continue son jeu de bloqueur, Enchainer envoie false.
-         * 
-         * Cette fonction n'est pas totalement terminé pour le moment
-         * Elle n'agira que sur la ligne 1 et si le J1 à aligner deux couleur ou non
-         */
-
-        private bool Enchainer()
-        {
-            // Pour l'instant je vérifie si le joueur 1 possède 2 violet ensembles
-            /*Pendant le tour de Vegeta mais avant que Vegeta ne joue 
-             * Si le joueur 1 n'a pas ce cas et que Vegeta a déja jouer
-             Alors il vérifie si une case est vide pour aligner du marron à la case qu'i la remplie
-             précédemment */
-
-
-            bool vegetaAJouer = false;
-            //Variable sui servira à faire comprendre dans les boucles de test dans la méthode Vegeta
-            // qu'il a jouer et qu'il devra passer son tour
-
-
-            //bool auDelaPremièreLigne = false;
-            int nbCouleurJ1=0, nbCouleurVegeta=0;
-            
-            // Pour chaque ligne
-            for(int i=5; i>=0; i--)
-            {
-                //Pour chaque case de cette ligne
-                for(int j=0; j<7; j++)
-                {
-                    /*
-                     * Chaque fois qu'il il y'a du violet on incrémente
-                     */
-                    if(teamLigne[i][j].ImageLocation == violet)
-                    {
-                        nbCouleurJ1 += 1;
-                    }
-
-                    /*
-                     * Si c'est du marron on remets à zero
-                     */
-                    else
-                    {
-                        nbCouleurJ1 = 0;
-                    }
-                    
-                }
-
-                // Si aucun alignement menaçant du J1 est trouvé alors Vegeta commence à en construire un
-                if(nbCouleurJ1<2)
-                {
-
-                    for(int j = 0; j<6; j++)
-                    {
-                        if (teamLigne[i][j].ImageLocation == marron
-                            && teamLigne[i][j+1].ImageLocation == null)
-                        {
-                            teamLigne[i][j + 1].ImageLocation = marron;
-                            vegetaAJouer = true;
-                            goto Terminer;
-                            
-                        }
-                        if (teamLigne[i][j].ImageLocation == null
-                            && teamLigne[i][j + 1].ImageLocation == marron)
-                        {
-                            teamLigne[i][j].ImageLocation = marron;
-                            vegetaAJouer = true;  goto Terminer;
-                        }
-                    }
-                }
-
-                break; // Uniquement la ligne un pour le moment
-            }
-
-            Terminer:;
-
-            return vegetaAJouer;
-
-        }
+        
     }
 }
     
