@@ -742,6 +742,11 @@ namespace Puissance_4
             PictureBox[][] teamLigneCopie = { Ligne1, Ligne2, Ligne3, Ligne4, Ligne5, Ligne6 };
             teamLigne = teamLigneCopie;
 
+
+            //Un goto sera ajouter à chaque condition de victoire car sinon, si
+            //un alignement de 5 cases se fait,
+            //Le gagnant recevra plusieurs point en cas de victoire dans un seul round
+
             //Je parcours chaque tableau
             foreach (PictureBox[] Ligne in teamLigne)
             {
@@ -761,6 +766,8 @@ namespace Puissance_4
                         lbJoueur2.Text = point2.ToString();
                         gagne = true;
                         BoutonVerrouiller();
+
+                        goto Labas;
                     }
 
                     if (Ligne[i].ImageLocation == violet &&
@@ -772,6 +779,8 @@ namespace Puissance_4
                         lbJoueur1.Text = point1.ToString();
                         gagne = true;
                         BoutonVerrouiller();
+
+                        goto Labas;
                     }
                 }
             }
@@ -860,6 +869,8 @@ namespace Puissance_4
             team6 = team6Copie;
 
             //Je parcours chaque tableau
+
+            
             foreach (PictureBox[] groupe in team6)
             {
                 //Je parcours chaque élement de chaque tableau
@@ -879,6 +890,7 @@ namespace Puissance_4
                         lbJoueur2.Text = point2.ToString();
                         gagne = true;
                         BoutonVerrouiller();
+                        goto Labas;
                     }
 
                     if (groupe[i].ImageLocation == violet &&
@@ -890,6 +902,7 @@ namespace Puissance_4
                         lbJoueur1.Text = point1.ToString();
                         gagne = true;
                         BoutonVerrouiller();
+                        goto Labas;
                     }
                 }
             }
@@ -917,6 +930,7 @@ namespace Puissance_4
                         lbJoueur2.Text = point2.ToString();
                         gagne = true;
                         BoutonVerrouiller();
+                        goto Labas;
                     }
 
                     if (groupe[i].ImageLocation == violet &&
@@ -928,6 +942,7 @@ namespace Puissance_4
                         lbJoueur1.Text = point1.ToString();
                         gagne = true;
                         BoutonVerrouiller();
+                        goto Labas;
                     }
                 }
             }
@@ -949,6 +964,7 @@ namespace Puissance_4
                     lbJoueur2.Text = point2.ToString();
                     gagne = true;
                     BoutonVerrouiller();
+                    goto Labas;
                 }
 
                 if (groupe[0].ImageLocation == violet &&
@@ -961,9 +977,11 @@ namespace Puissance_4
                     gagne = true;
 
                     BoutonVerrouiller();
+                    goto Labas;
                 }
             }
 
+            Labas:;
 
             if (gagne)
             {
